@@ -92,4 +92,4 @@ MIT
 
 ---
 
-Built for **GSSoC 2026** 🚀
+Built for **Open Source Community** 🚀
