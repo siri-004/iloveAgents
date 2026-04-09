@@ -1,10 +1,10 @@
 <div align="center">
 
-# I ❤️ Agents
+# I Love Agents
 
 **AI Agents, ready to use. Open source. Community-built. Bring your own key.**
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-iloveagents.vercel.app-6C63FF?style=for-the-badge)](https://iloveagents.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-iloveagents.vercel.app-6C63FF?style=for-the-badge)](https://iloveagents.vercel.app)
 
 [![GSSoC 2026](https://img.shields.io/badge/GSSoC-2026-blue?style=flat-square)](https://gssoc.girlscript.tech/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
@@ -18,41 +18,41 @@
 
 ---
 
-## ✨ What is I Love Agents?
+## What is I Love Agents?
 
 **I Love Agents** is a clean, modern web platform where you can run AI agents directly in your browser — no backend, no data collection, no sign-up. Just paste your API key and go.
 
 Each agent is a focused tool that does one thing well: summarize meeting notes, generate SQL queries, write cold emails, review code, and more. The entire platform is **config-driven** — adding a new agent is as simple as adding a JavaScript object to a single file.
 
-### 🔑 Key Highlights
+### Key Highlights
 
-- **🔒 Privacy-first** — API keys never leave your browser. No server, no storage, no tracking.
-- **⚡ Zero setup** — No `.env` files, no backend, no database. Clone and run.
-- **🤖 Multi-provider** — Works with OpenAI, Anthropic, and Google Gemini out of the box.
-- **🧩 Config-driven** — Add agents by editing one file. No React knowledge needed.
-- **🌐 Community-built** — Open source and designed for contributions.
+- **Privacy-first** — API keys never leave your browser. No server, no storage, no tracking.
+- **Zero setup** — No `.env` files, no backend, no database. Clone and run.
+- **Multi-provider** — Works with OpenAI, Anthropic, and Google Gemini out of the box.
+- **Config-driven** — Add agents by editing one file. No React knowledge needed.
+- **Community-built** — Open source and designed for contributions.
 
 ---
 
-## 🤖 Available Agents
+## Available Agents
 
 | # | Agent | What It Does | Category | Default Provider |
 |---|-------|-------------|----------|-----------------|
-| 1 | 📄 **PDF Summarizer** | Extracts structured summaries from PDF text with key points and action items | Productivity | Anthropic |
-| 2 | 🔍 **Research Agent** | Comprehensive research on any topic with configurable depth and format | Research | OpenAI |
-| 3 | ✉️ **Cold Email Writer** | Generates personalized B2B cold emails with tone and length control | Marketing | OpenAI |
-| 4 | 💻 **Code Reviewer** | Senior-level code review with issue detection, scoring, and fix suggestions | Engineering | Anthropic |
-| 5 | 👤 **Resume Screener** | Evaluates candidates against job descriptions with visual scorecard output | HR | OpenAI |
-| 6 | ✍️ **LinkedIn Post Writer** | Creates ready-to-post LinkedIn content with strong hooks and hashtags | Marketing | OpenAI |
-| 7 | 📝 **Meeting Notes Summarizer** | Turns raw meeting notes into clean summaries with decisions, action items, and owners | Productivity | Anthropic |
-| 8 | 🗄️ **SQL Query Generator** | Converts plain English questions into optimized SQL with explanations | Engineering | Anthropic |
-| 9 | ✱ **Regex Generator** | Translates plain English descriptions into tested regex patterns with breakdowns | Engineering | OpenAI |
+| 1 | **PDF Summarizer** | Extracts structured summaries from PDF text with key points and action items | Productivity | Anthropic |
+| 2 | **Research Agent** | Comprehensive research on any topic with configurable depth and format | Research | OpenAI |
+| 3 | **Cold Email Writer** | Generates personalized B2B cold emails with tone and length control | Marketing | OpenAI |
+| 4 | **Code Reviewer** | Senior-level code review with issue detection, scoring, and fix suggestions | Engineering | Anthropic |
+| 5 | **Resume Screener** | Evaluates candidates against job descriptions with visual scorecard output | HR | OpenAI |
+| 6 | **LinkedIn Post Writer** | Creates ready-to-post LinkedIn content with strong hooks and hashtags | Marketing | OpenAI |
+| 7 | **Meeting Notes Summarizer** | Turns raw meeting notes into clean summaries with decisions, action items, and owners | Productivity | Anthropic |
+| 8 | **SQL Query Generator** | Converts plain English questions into optimized SQL with explanations | Engineering | Anthropic |
+| 9 | **Regex Generator** | Translates plain English descriptions into tested regex patterns with breakdowns | Engineering | OpenAI |
 
-> **Want to add your own?** See the [Contributing](#-contributing) section below — it takes ~5 minutes.
+> **Want to add your own?** See the [Contributing](#contributing) section below — it takes ~5 minutes.
 
 ---
 
-## 🔌 Supported Providers
+## Supported Providers
 
 | Provider | Models | How to Get a Key |
 |----------|--------|-----------------|
@@ -64,7 +64,7 @@ All agents support **provider switching** at runtime — pick any supported prov
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -99,7 +99,7 @@ The included `vercel.json` handles SPA routing automatically.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 src/
@@ -132,7 +132,7 @@ src/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! The easiest and most impactful way to contribute is to **add a new agent**.
 
@@ -168,19 +168,19 @@ We welcome contributions! The easiest and most impactful way to contribute is to
 
 **3. Open a PR** — Push and submit. That's it!
 
-> 📖 See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines, input types, and output types.
+> See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines, input types, and output types.
 
 ### Other Ways to Contribute
 
-- 🐛 **Bug fixes** — Found something broken? Fix it!
-- 🎨 **UI/UX improvements** — Make the platform even more beautiful
-- 📝 **Documentation** — Improve docs, add examples
-- ♿ **Accessibility** — Help make agents usable for everyone
-- 🧪 **Tests** — Add test coverage
+- **Bug fixes** — Found something broken? Fix it!
+- **UI/UX improvements** — Make the platform even more beautiful
+- **Documentation** — Improve docs, add examples
+- **Accessibility** — Help make agents usable for everyone
+- **Tests** — Add test coverage
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 |-----------|---------|
@@ -194,7 +194,7 @@ We welcome contributions! The easiest and most impactful way to contribute is to
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE) — use it, fork it, build on it.
 
@@ -202,9 +202,9 @@ This project is licensed under the [MIT License](LICENSE) — use it, fork it, b
 
 <div align="center">
 
-**Built with ❤️ by the open source community**
+**Built by the open source community**
 
-🌟 **Star this repo** if you find it useful!
+**Star this repo** if you find it useful!
 
 [Live Demo](https://iloveagents.vercel.app) · [Report Bug](https://github.com/AditthyaSS/iloveAgents/issues) · [Request Agent](https://github.com/AditthyaSS/iloveAgents/issues/new) · [Contribute](CONTRIBUTING.md)
 
