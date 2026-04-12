@@ -52,7 +52,8 @@ Each agent is a focused tool that does one thing well: summarize meeting notes, 
 | 12 | **API Doc Generator** | Paste code and get clean, professional API documentation with examples | Engineering | Anthropic |
 | 13 | **Email Reply Writer** | Paste any email you received and describe how you want to respond. Get a polished reply in seconds.| Productivity| Any |
 | 14 | **Bug Report Generator** |Describe a bug in plain English and get a complete, structured bug report ready to paste into GitHub Issues or Jira.|Engineering| Any |
-| 13 | **Performance Review Writer** | Turn bullet notes about an employee into a structured, fair, and specific performance review.| HR| Any |
+| 15 | **Performance Review Writer** | Turn bullet notes about an employee into a structured, fair, and specific performance review.| HR| Any |
+| 16 | **Cover Letter Writer** | Paste a job description and your background. Get a tailored cover letter that doesn't sound like every other cover letter.| HR| Any |
 
 
 > **Want to add your own?** See the [Contributing](#contributing) section below — it takes ~5 minutes.
