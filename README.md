@@ -50,6 +50,7 @@ Each agent is a focused tool that does one thing well: summarize meeting notes, 
 | 10 | **Startup Idea Validator** | Analyzes startup ideas with market potential, competition, risks, and viability scoring | Business | OpenAI |
 | 11 | **ELI5 Explainer** | Explains complex topics in plain language at your chosen difficulty level | Education | OpenAI |
 | 12 | **API Doc Generator** | Paste code and get clean, professional API documentation with examples | Engineering | Anthropic |
+| 13 | **Email Reply Writer** | Paste any email you received and describe how you want to respond. Get a polished reply in seconds.| Productivity| Any |
 
 > **Want to add your own?** See the [Contributing](#contributing) section below — it takes ~5 minutes.
 
