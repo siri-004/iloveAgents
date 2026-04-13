@@ -62,6 +62,7 @@ Each agent is a focused tool that does one thing well: summarize meeting notes, 
 | 22 | **Grant Proposal Writer** |Describe your project or research and get a structured grant proposal with problem statement, objectives, methodology, and impact.| Education| Any|
 | 23 | **Social Media Thread Writer** |Turn any topic or idea into a compelling X/Twitter thread with hooks, engagement tactics, and a strong call to action.| Marketing| Any|
 | 24 | **Privacy Policy Generator** |Describe your app or website and get a comprehensive privacy policy draft covering data collection, usage, storage, and user rights.|Legal| Any|
+| 24 | **Cron Expression Builder** |Describe when you want a job to run in plain English and get a correct cron expression with a human-readabl  explanation.|Engineering| Any|
 
 
 
