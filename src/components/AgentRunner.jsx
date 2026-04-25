@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import * as Icons from 'lucide-react'
-import { Loader2, RotateCcw, Clock, Zap, StopCircle } from 'lucide-react'
+import { Loader2, RotateCcw, Clock, Zap, StopCircle, ChevronDown, ChevronRight, Sparkles, RotateCw } from 'lucide-react'
 import ApiKeyBar from './ApiKeyBar'
 import OutputRenderer from './OutputRenderer'
 import ErrorCard from './ErrorCard'
@@ -38,6 +38,11 @@ export default function AgentRunner({ agent }) {
   const [tokensUsed, setTokensUsed] = useState(null)
   const [duration, setDuration] = useState(null)
   const [selectedModel, setSelectedModel] = useState(MODEL_MAP[provider] || MODEL_MAP.openai)
+
+  // Prompt Playground state
+  const [playgroundOpen, setPlaygroundOpen] = useState(false)
+  const [customPrompt, setCustomPrompt] = useState(agent.systemPrompt)
+  const isPromptModified = customPrompt !== agent.systemPrompt
   const [msgIndex, setMsgIndex] = useState(0)
 
   const abortControllerRef = useRef(null)
@@ -60,6 +65,8 @@ export default function AgentRunner({ agent }) {
     setError(null)
     setTokensUsed(null)
     setDuration(null)
+    setCustomPrompt(agent.systemPrompt)
+    setPlaygroundOpen(false)
 
     // Set defaults
     const defaults = {}
@@ -163,7 +170,7 @@ export default function AgentRunner({ agent }) {
         provider: actualProvider,
         model,
         apiKey,
-        systemPrompt: agent.systemPrompt,
+        systemPrompt: customPrompt,
         userMessage: buildUserMessage(),
         onChunk: handleChunk,
         signal: controller.signal,
@@ -357,6 +364,81 @@ export default function AgentRunner({ agent }) {
         ))}
       </div>
 
+      {/* ── Prompt Playground ── */}
+      <div className="mb-4 rounded-lg border transition-all duration-200
+        dark:bg-surface-card dark:border-border bg-white border-gray-200">
+        {/* Toggle header */}
+        <button
+          onClick={() => setPlaygroundOpen(!playgroundOpen)}
+          className="w-full flex items-center justify-between px-4 py-3 text-left group"
+        >
+          <div className="flex items-center gap-2">
+            <Sparkles size={14} className="text-accent" />
+            <span className="text-xs font-semibold dark:text-text-primary text-gray-700">
+              Prompt Playground
+            </span>
+            {isPromptModified && (
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full
+                bg-amber-400/10 text-amber-500 border border-amber-400/20">
+                Modified
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] dark:text-text-muted text-gray-400">
+              {playgroundOpen ? 'Collapse' : 'Edit system prompt'}
+            </span>
+            {playgroundOpen
+              ? <ChevronDown size={14} className="dark:text-text-muted text-gray-400 transition-transform" />
+              : <ChevronRight size={14} className="dark:text-text-muted text-gray-400 transition-transform" />
+            }
+          </div>
+        </button>
+
+        {/* Expandable content */}
+        {playgroundOpen && (
+          <div className="px-4 pb-4 animate-fade-in">
+            <div className="mb-2 flex items-center justify-between">
+              <label className="text-[11px] font-medium dark:text-text-secondary text-gray-500">
+                System Prompt
+              </label>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] dark:text-text-muted text-gray-400">
+                  {customPrompt.length} chars
+                </span>
+                {isPromptModified && (
+                  <button
+                    onClick={() => setCustomPrompt(agent.systemPrompt)}
+                    className="flex items-center gap-1 text-[10px] font-medium text-accent hover:text-accent-hover transition-colors"
+                    title="Reset to default prompt"
+                  >
+                    <RotateCw size={10} />
+                    Reset
+                  </button>
+                )}
+              </div>
+            </div>
+            <textarea
+              value={customPrompt}
+              onChange={(e) => setCustomPrompt(e.target.value)}
+              rows={10}
+              spellCheck={false}
+              className="w-full px-3 py-2.5 rounded-lg text-xs font-mono leading-relaxed transition-colors resize-y
+                dark:bg-[#0d1117] dark:border-border dark:text-gray-300 dark:placeholder:text-text-muted
+                bg-gray-50 border border-gray-200 text-gray-700 placeholder:text-gray-400
+                focus:ring-1 focus:ring-accent focus:border-accent outline-none"
+              placeholder="Enter your custom system prompt..."
+            />
+            {isPromptModified && (
+              <p className="mt-2 text-[10px] dark:text-amber-400/80 text-amber-600 flex items-center gap-1">
+                <Sparkles size={10} />
+                You're using a custom prompt. This won't affect other users.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
       {/* Action buttons */}
       <div className="flex items-center gap-2 mb-6">
         {loading ? (
@@ -461,7 +543,7 @@ export default function AgentRunner({ agent }) {
           content={output}
           outputType={agent.outputType}
           agentName={agent.name}
-          systemPrompt={agent.systemPrompt}
+          systemPrompt={customPrompt}
         />
       )}
     </div>
