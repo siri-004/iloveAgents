@@ -1,11 +1,49 @@
-import { Bot, Users, Code2, ArrowRight, Github } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal } from 'lucide-react'
 import agents from '../agents/registry'
 import AgentCard from '../components/AgentCard'
 
+// Derive unique sorted categories from the registry
+const allCategories = [...new Set(agents.map((a) => a.category))].sort()
+
+// Category icons/colors for the filter pills
+const categoryMeta = {
+  Productivity: { color: 'from-blue-500 to-cyan-400',   ring: 'ring-blue-500/30' },
+  Research:     { color: 'from-violet-500 to-purple-400', ring: 'ring-violet-500/30' },
+  Marketing:    { color: 'from-pink-500 to-rose-400',    ring: 'ring-pink-500/30' },
+  Engineering:  { color: 'from-emerald-500 to-green-400', ring: 'ring-emerald-500/30' },
+  HR:           { color: 'from-amber-500 to-yellow-400',  ring: 'ring-amber-500/30' },
+  Business:     { color: 'from-orange-500 to-amber-400',  ring: 'ring-orange-500/30' },
+  Education:    { color: 'from-indigo-500 to-blue-400',   ring: 'ring-indigo-500/30' },
+  Legal:        { color: 'from-red-500 to-rose-400',      ring: 'ring-red-500/30' },
+  Design:       { color: 'from-fuchsia-500 to-pink-400',  ring: 'ring-fuchsia-500/30' },
+  Product:      { color: 'from-teal-500 to-cyan-400',     ring: 'ring-teal-500/30' },
+}
+
+const defaultMeta = { color: 'from-gray-500 to-gray-400', ring: 'ring-gray-500/30' }
+
 export default function HomePage() {
-  const uniqueProviders = [...new Set(agents.map((a) => a.provider === 'any'
-    ? (a.defaultProvider || 'openai')
-    : a.provider))]
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(null)
+
+  // Filter agents based on search + category
+  const filteredAgents = useMemo(() => {
+    return agents.filter((agent) => {
+      const matchesCategory = !selectedCategory || agent.category === selectedCategory
+      if (!matchesCategory) return false
+
+      if (!searchQuery.trim()) return true
+
+      const q = searchQuery.toLowerCase()
+      return (
+        agent.name.toLowerCase().includes(q) ||
+        agent.description.toLowerCase().includes(q) ||
+        agent.category.toLowerCase().includes(q)
+      )
+    })
+  }, [searchQuery, selectedCategory])
+
+  const showingFiltered = searchQuery.trim() || selectedCategory
 
   return (
     <div className="animate-fade-in">
@@ -61,16 +99,114 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* ── Search & Category Filter Section ── */}
+      <div className="mb-6 space-y-4">
+        {/* Search Bar */}
+        <div className="relative max-w-xl mx-auto">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+            <Search size={16} className="dark:text-text-muted text-gray-400" />
+          </div>
+          <input
+            id="agent-search"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search agents by name, description, or category..."
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl border text-sm transition-all duration-200
+              dark:bg-surface-card dark:border-border dark:text-text-primary dark:placeholder-text-muted
+              bg-white border-gray-200 text-gray-900 placeholder-gray-400
+              focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/50
+              hover:border-accent/30"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center
+                dark:text-text-muted text-gray-400 hover:text-accent transition-colors"
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        {/* Category Filter Pills */}
+        <div className="flex items-center gap-2 flex-wrap justify-center">
+          <SlidersHorizontal size={14} className="dark:text-text-muted text-gray-400 flex-shrink-0" />
+          <button
+            id="filter-all"
+            onClick={() => setSelectedCategory(null)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border
+              ${!selectedCategory
+                ? 'bg-accent text-white border-accent shadow-md shadow-accent/20'
+                : 'dark:bg-surface-card dark:border-border dark:text-text-secondary dark:hover:border-accent/40 bg-white border-gray-200 text-gray-600 hover:border-indigo-300'
+              }`}
+          >
+            All
+          </button>
+          {allCategories.map((cat) => {
+            const meta = categoryMeta[cat] || defaultMeta
+            const isActive = selectedCategory === cat
+            return (
+              <button
+                key={cat}
+                id={`filter-${cat.toLowerCase()}`}
+                onClick={() => setSelectedCategory(isActive ? null : cat)}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border
+                  ${isActive
+                    ? `bg-gradient-to-r ${meta.color} text-white border-transparent shadow-md ring-2 ${meta.ring}`
+                    : 'dark:bg-surface-card dark:border-border dark:text-text-secondary dark:hover:border-accent/40 bg-white border-gray-200 text-gray-600 hover:border-indigo-300'
+                  }`}
+              >
+                {cat}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
       {/* Agent Grid */}
       <div className="mb-8">
-        <h2 className="text-sm font-semibold uppercase tracking-wider dark:text-text-muted text-gray-400 mb-4">
-          Available Agents
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {agents.map((agent) => (
-            <AgentCard key={agent.id} agent={agent} />
-          ))}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-sm font-semibold uppercase tracking-wider dark:text-text-muted text-gray-400">
+            {showingFiltered ? 'Matching Agents' : 'Available Agents'}
+          </h2>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent/10 text-accent">
+            {filteredAgents.length} {filteredAgents.length === 1 ? 'agent' : 'agents'}
+          </span>
         </div>
+
+        {filteredAgents.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {filteredAgents.map((agent, idx) => (
+              <div
+                key={agent.id}
+                className="animate-fade-in"
+                style={{ animationDelay: `${idx * 30}ms` }}
+              >
+                <AgentCard agent={agent} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16 rounded-xl border dark:bg-surface-card dark:border-border bg-white border-gray-200">
+            <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+              <Search size={24} className="text-accent" />
+            </div>
+            <h3 className="text-sm font-semibold dark:text-text-primary text-gray-900 mb-1">
+              No agents found
+            </h3>
+            <p className="text-xs dark:text-text-secondary text-gray-500 mb-4">
+              Try adjusting your search or removing category filters
+            </p>
+            <button
+              onClick={() => { setSearchQuery(''); setSelectedCategory(null); }}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-hover transition-colors"
+            >
+              Clear all filters <X size={12} />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Footer CTA */}
