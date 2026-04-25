@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import * as Icons from 'lucide-react'
-import { Loader2, RotateCcw, Clock, Zap } from 'lucide-react'
+import { Loader2, RotateCcw, Clock, Zap, StopCircle } from 'lucide-react'
 import ApiKeyBar from './ApiKeyBar'
 import OutputRenderer from './OutputRenderer'
 import ErrorCard from './ErrorCard'
 import { useApiKey } from '../lib/useApiKey'
-import { runAgent } from '../lib/llmAdapter'
+import { streamAgent } from '../lib/llmAdapter'
 
 const providerLabels = { openai: 'OpenAI', anthropic: 'Anthropic', gemini: 'Gemini', any: 'Any' }
 
@@ -31,12 +31,16 @@ export default function AgentRunner({ agent }) {
 
   const [inputs, setInputs] = useState({})
   const [output, setOutput] = useState(null)
+  const [streamingOutput, setStreamingOutput] = useState('')
+  const [isStreaming, setIsStreaming] = useState(false)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
   const [tokensUsed, setTokensUsed] = useState(null)
   const [duration, setDuration] = useState(null)
   const [selectedModel, setSelectedModel] = useState(MODEL_MAP[provider] || MODEL_MAP.openai)
   const [msgIndex, setMsgIndex] = useState(0)
+
+  const abortControllerRef = useRef(null)
 
   // Auto-update model when provider changes
   useEffect(() => {
@@ -45,7 +49,14 @@ export default function AgentRunner({ agent }) {
 
   // Reset state when agent changes
   useEffect(() => {
+    // Cancel any in-progress stream
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      abortControllerRef.current = null
+    }
     setOutput(null)
+    setStreamingOutput('')
+    setIsStreaming(false)
     setError(null)
     setTokensUsed(null)
     setDuration(null)
@@ -71,14 +82,14 @@ export default function AgentRunner({ agent }) {
     }
   }, [agent.id])
 
-  // Rotate loading messages while agent is running
+  // Rotate loading messages while agent is running (only before stream starts)
   useEffect(() => {
-    if (!loading) return
+    if (!loading || isStreaming) return
     const interval = setInterval(() => {
       setMsgIndex(prev => (prev + 1) % LOADING_MESSAGES.length)
     }, 2500)
     return () => clearInterval(interval)
-  }, [loading])
+  }, [loading, isStreaming])
 
   const updateInput = (id, value) => {
     setInputs((prev) => ({ ...prev, [id]: value }))
@@ -125,38 +136,75 @@ export default function AgentRunner({ agent }) {
       })
   }
 
+  const handleChunk = useCallback((chunk) => {
+    setStreamingOutput(prev => prev + chunk)
+    setIsStreaming(true)
+  }, [])
+
   const handleRun = async () => {
     setLoading(true)
     setError(null)
     setOutput(null)
+    setStreamingOutput('')
+    setIsStreaming(false)
     setTokensUsed(null)
     setDuration(null)
     setMsgIndex(0)
+
+    // Create an AbortController for cancellation
+    const controller = new AbortController()
+    abortControllerRef.current = controller
 
     try {
       const actualProvider = agent.provider === 'any' ? provider : agent.provider
       const model = selectedModel || MODEL_MAP[actualProvider] || MODEL_MAP.openai
 
-      const result = await runAgent({
+      const result = await streamAgent({
         provider: actualProvider,
         model,
         apiKey,
         systemPrompt: agent.systemPrompt,
         userMessage: buildUserMessage(),
+        onChunk: handleChunk,
+        signal: controller.signal,
       })
 
+      // Stream complete — move to final output
       setOutput(result.content)
-      setTokensUsed(result.tokens)
+      setStreamingOutput('')
+      setIsStreaming(false)
       setDuration(result.duration)
     } catch (err) {
-      setError(err.message)
+      if (err.name !== 'AbortError') {
+        setError(err.message)
+      }
     } finally {
       setLoading(false)
+      abortControllerRef.current = null
     }
   }
 
+  const handleStop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      abortControllerRef.current = null
+    }
+    // Preserve whatever has streamed so far as the final output
+    setOutput(streamingOutput)
+    setStreamingOutput('')
+    setIsStreaming(false)
+    setLoading(false)
+  }
+
   const handleClear = () => {
+    // Cancel any in-progress stream
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      abortControllerRef.current = null
+    }
     setOutput(null)
+    setStreamingOutput('')
+    setIsStreaming(false)
     setError(null)
     setTokensUsed(null)
     setDuration(null)
@@ -174,6 +222,9 @@ export default function AgentRunner({ agent }) {
   }
 
   const IconComponent = Icons[agent.icon] || Icons.Bot
+
+  // Determine what to show in the output area
+  const displayContent = output || (isStreaming ? streamingOutput : null)
 
   return (
     <div className="max-w-3xl mx-auto animate-fade-in">
@@ -308,20 +359,28 @@ export default function AgentRunner({ agent }) {
 
       {/* Action buttons */}
       <div className="flex items-center gap-2 mb-6">
-        <button
-          onClick={handleRun}
-          disabled={!canRun() || loading}
-          className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white
-            bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed
-            transition-all duration-200 active:scale-[0.98]"
-        >
-          {loading ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : (
+        {loading ? (
+          <button
+            onClick={handleStop}
+            className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
+              text-white bg-red-500 hover:bg-red-600
+              transition-all duration-200 active:scale-[0.98]"
+          >
+            <StopCircle size={16} />
+            Stop
+          </button>
+        ) : (
+          <button
+            onClick={handleRun}
+            disabled={!canRun()}
+            className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white
+              bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:cursor-not-allowed
+              transition-all duration-200 active:scale-[0.98]"
+          >
             <Zap size={16} />
-          )}
-          {loading ? 'Running...' : 'Run Agent'}
-        </button>
+            Run Agent
+          </button>
+        )}
 
         <button
           onClick={handleClear}
@@ -355,17 +414,49 @@ export default function AgentRunner({ agent }) {
       {/* Error */}
       {error && <ErrorCard message={error} />}
 
-      {/* Loading State */}
-      {loading && (
+      {/* Loading State — only before stream starts */}
+      {loading && !isStreaming && (
         <div className="rounded-lg border p-6 dark:bg-surface-card dark:border-border bg-white border-gray-200 text-center animate-fade-in">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Loader2 size={16} className="animate-spin text-accent" />
+            <span className="text-xs font-medium text-accent">Connecting to API...</span>
+          </div>
           <p className="text-sm dark:text-text-secondary text-gray-500 transition-all duration-500">
             {LOADING_MESSAGES[msgIndex]}
           </p>
         </div>
       )}
 
-      {/* Output */}
-      {output && (
+      {/* Streaming Output — live as tokens arrive */}
+      {isStreaming && streamingOutput && (
+        <div className="animate-fade-in">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider dark:text-text-muted text-gray-400">
+                Output
+              </span>
+              <span className="flex items-center gap-1.5 text-[11px] font-medium text-accent">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                </span>
+                Streaming...
+              </span>
+            </div>
+          </div>
+          <div className="rounded-lg border p-4 dark:bg-surface-card dark:border-border bg-white border-gray-200">
+            <div className="markdown-output text-sm dark:text-text-primary text-gray-900">
+              <pre className="whitespace-pre-wrap font-sans leading-relaxed">
+                {streamingOutput}
+                <span className="inline-block w-[2px] h-[1em] bg-accent animate-blink ml-0.5 align-middle" />
+              </pre>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Final Output — rendered with full markdown after stream completes */}
+      {output && !isStreaming && (
         <OutputRenderer
           content={output}
           outputType={agent.outputType}
