@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import * as Icons from 'lucide-react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Star } from 'lucide-react'
+import { useFavorites } from '../lib/useFavorites'
 
 const providerColors = {
   openai: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' },
@@ -20,6 +21,14 @@ export default function AgentCard({ agent }) {
   const IconComponent = Icons[agent.icon] || Icons.Bot
   const prov = providerColors[agent.provider] || providerColors.any
   const provLabel = providerLabels[agent.provider] || agent.provider
+  const { isFavorite, toggleFavorite } = useFavorites()
+  const favorited = isFavorite(agent.id)
+
+  const handleFavorite = (e) => {
+    e.preventDefault()  // prevent Link navigation
+    e.stopPropagation()
+    toggleFavorite(agent.id)
+  }
 
   return (
     <Link
@@ -28,7 +37,7 @@ export default function AgentCard({ agent }) {
         dark:bg-surface-card dark:border-border dark:hover:border-accent/40
         bg-white border-gray-200 hover:border-indigo-300 hover:shadow-lg hover:shadow-accent/5"
     >
-      {/* Top row: icon + badges */}
+      {/* Top row: icon + badges + star */}
       <div className="flex items-start justify-between mb-3">
         <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center
           group-hover:bg-accent/20 transition-colors">
@@ -39,6 +48,21 @@ export default function AgentCard({ agent }) {
             bg-gray-100 text-gray-500 border dark:border-border border-gray-200">
             {agent.category}
           </span>
+          <button
+            onClick={handleFavorite}
+            className={`p-1 rounded-md transition-all duration-200
+              ${favorited
+                ? 'text-yellow-400 hover:text-yellow-300 scale-110'
+                : 'dark:text-text-muted text-gray-300 hover:text-yellow-400 opacity-0 group-hover:opacity-100'
+              }`}
+            aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+            title={favorited ? 'Remove from favorites' : 'Add to favorites'}
+          >
+            <Star
+              size={15}
+              className={`transition-transform duration-200 ${favorited ? 'fill-yellow-400' : ''}`}
+            />
+          </button>
         </div>
       </div>
 

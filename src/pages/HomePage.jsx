@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react'
-import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal } from 'lucide-react'
+import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart } from 'lucide-react'
 import agents from '../agents/registry'
 import AgentCard from '../components/AgentCard'
+import { useFavorites } from '../lib/useFavorites'
 
 // Derive unique sorted categories from the registry
 const allCategories = [...new Set(agents.map((a) => a.category))].sort()
@@ -25,6 +26,14 @@ const defaultMeta = { color: 'from-gray-500 to-gray-400', ring: 'ring-gray-500/3
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(null)
+  const { favorites } = useFavorites()
+
+  // Resolve favorite agents (preserving the user's star order)
+  const favoriteAgents = useMemo(() => {
+    return favorites
+      .map((id) => agents.find((a) => a.id === id))
+      .filter(Boolean)
+  }, [favorites])
 
   // Filter agents based on search + category
   const filteredAgents = useMemo(() => {
@@ -98,6 +107,32 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* ── Favorites Section ── */}
+      {favoriteAgents.length > 0 && !showingFiltered && (
+        <div className="mb-8 animate-fade-in">
+          <div className="flex items-center gap-2 mb-4">
+            <Star size={14} className="text-yellow-400 fill-yellow-400" />
+            <h2 className="text-sm font-semibold uppercase tracking-wider dark:text-text-muted text-gray-400">
+              Your Favorites
+            </h2>
+            <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-400/10 text-yellow-500 border border-yellow-400/20">
+              {favoriteAgents.length}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {favoriteAgents.map((agent, idx) => (
+              <div
+                key={agent.id}
+                className="animate-fade-in"
+                style={{ animationDelay: `${idx * 40}ms` }}
+              >
+                <AgentCard agent={agent} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── Search & Category Filter Section ── */}
       <div className="mb-6 space-y-4">
