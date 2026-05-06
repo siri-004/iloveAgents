@@ -351,7 +351,6 @@ export default function AgentRunner({ agent }) {
     </div>
   </>
 )}
-            )}
 
             {input.type === 'select' && (
               <select
