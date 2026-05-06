@@ -28,15 +28,32 @@ export default function VoiceInput({
 
   const [isRecording, setIsRecording] = useState(false);
   const recognitionRef = useRef(null);
-  // Snapshot of `value` at the moment recording started, so onresult appends
-  // to a stable baseline instead of stale closure state.
+  // Snapshot of `value` at the moment recording started. Each onresult event
+  // appends the latest transcript to this baseline. We update it in two cases:
+  //   1. When the speech engine finalizes a chunk (push it onto the baseline).
+  //   2. When the user types while recording (reconcile via lastWrittenRef
+  //      below) so their typing doesn't get clobbered by the next onresult.
   const baseValueRef = useRef("");
+  // The exact string we last pushed via onChange. If the incoming `value`
+  // prop diverges from this while recording, the user typed — and we need
+  // to fold their edit into the baseline.
+  const lastWrittenRef = useRef("");
   // Latest onChange — keeps the recognition handlers from going stale.
   const onChangeRef = useRef(onChange);
 
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
+
+  // Reconcile user typing during recording. If `value` no longer matches
+  // what we last wrote, the user edited the field by hand — make their
+  // version the new baseline so the next transcript appends to it.
+  useEffect(() => {
+    if (isRecording && value !== lastWrittenRef.current) {
+      baseValueRef.current = value || "";
+      lastWrittenRef.current = value || "";
+    }
+  }, [value, isRecording]);
 
   // Cleanup: if the component unmounts mid-recording, stop the mic.
   useEffect(() => {
@@ -62,6 +79,7 @@ export default function VoiceInput({
     recognition.lang = "en-US";
 
     baseValueRef.current = value || "";
+    lastWrittenRef.current = value || "";
 
     recognition.onresult = (event) => {
       let finalTranscript = "";
@@ -87,13 +105,18 @@ export default function VoiceInput({
           baseValueRef.current + sep + finalTranscript.trim();
       }
 
+      // Trim interim too — Chrome's SpeechRecognition often returns
+      // transcripts with leading spaces ("word boundary" markers). Without
+      // trimming, you get a leading space on the very first utterance and
+      // double spaces between utterances.
+      const interim = interimTranscript.trim();
       const sep =
-        baseValueRef.current &&
-        interimTranscript &&
-        !baseValueRef.current.endsWith(" ")
+        baseValueRef.current && interim && !baseValueRef.current.endsWith(" ")
           ? " "
           : "";
-      onChangeRef.current(baseValueRef.current + sep + interimTranscript);
+      const next = baseValueRef.current + sep + interim;
+      lastWrittenRef.current = next;
+      onChangeRef.current(next);
     };
 
     recognition.onerror = () => {
