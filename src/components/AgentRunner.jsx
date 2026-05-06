@@ -315,7 +315,6 @@ export default function AgentRunner({ agent }) {
             )}
 
             {input.type === 'textarea' && (
-{input.type === 'textarea' && (
   <>
     <textarea
       value={inputs[input.id] || ''}
