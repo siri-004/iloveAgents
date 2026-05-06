@@ -43,6 +43,7 @@ export default function AgentRunner({ agent }) {
 
   const isPromptModified = customPrompt !== agent.systemPrompt
   const abortControllerRef = useRef(null)
+  const runButtonRef = useRef(null)
 
   useEffect(() => {
     setSelectedModel(MODEL_MAP[provider] || MODEL_MAP.openai)
@@ -150,6 +151,7 @@ export default function AgentRunner({ agent }) {
     setIsStreaming(true)
   }, [])
 
+
   const handleRun = async () => {
     setLoading(true)
     setError(null)
@@ -189,6 +191,16 @@ export default function AgentRunner({ agent }) {
       abortControllerRef.current = null
     }
   }
+
+  const handleKeyDown = (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault()
+
+    if (loading || !canRun()) return
+
+    runButtonRef.current?.click()
+  }
+}
 
   const handleStop = () => {
     if (abortControllerRef.current) {
@@ -303,40 +315,43 @@ export default function AgentRunner({ agent }) {
             )}
 
             {input.type === 'textarea' && (
-              <>
-                <textarea
-                  value={inputs[input.id] || ''}
-                  onChange={(e) => updateInput(input.id, e.target.value)}
-                  placeholder={input.placeholder}
-                  rows={4}
-                  className="w-full px-3 py-2 rounded-md text-sm transition-colors resize-y
-                    dark:bg-surface-input dark:border-border dark:text-text-primary dark:placeholder:text-text-muted
-                    bg-gray-50 border border-gray-200 text-gray-900 placeholder:text-gray-400
-                    focus:ring-1 focus:ring-accent focus:border-accent outline-none"
-                />
-                <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
-                  {getTextStats(inputs[input.id])}
-                </div>
-              </>
-            )}
-
-            {input.type === 'code' && (
-              <>
-                <textarea
-                  value={inputs[input.id] || ''}
-                  onChange={(e) => updateInput(input.id, e.target.value)}
-                  placeholder={input.placeholder}
-                  rows={8}
-                  className="w-full px-3 py-2 rounded-md text-xs font-mono transition-colors resize-y leading-relaxed
-                    dark:bg-[#0d1117] dark:border-border dark:text-green-300 dark:placeholder:text-text-muted
-                    bg-gray-900 border border-gray-700 text-green-400 placeholder:text-gray-500
-                    focus:ring-1 focus:ring-accent focus:border-accent outline-none"
-                  spellCheck={false}
-                />
-                <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
-                  {getTextStats(inputs[input.id])}
-                </div>
-              </>
+{input.type === 'textarea' && (
+  <>
+    <textarea
+      value={inputs[input.id] || ''}
+      onChange={(e) => updateInput(input.id, e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder={input.placeholder}
+      rows={4}
+      className="w-full px-3 py-2 rounded-md text-sm transition-colors resize-y
+        dark:bg-surface-input dark:border-border dark:text-text-primary dark:placeholder:text-text-muted
+        bg-gray-50 border border-gray-200 text-gray-900 placeholder:text-gray-400
+        focus:ring-1 focus:ring-accent focus:border-accent outline-none"
+    />
+    <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
+      {getTextStats(inputs[input.id])}
+    </div>
+  </>
+)}
+{input.type === 'code' && (
+  <>
+    <textarea
+      value={inputs[input.id] || ''}
+      onChange={(e) => updateInput(input.id, e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder={input.placeholder}
+      rows={8}
+      className="w-full px-3 py-2 rounded-md text-xs font-mono transition-colors resize-y leading-relaxed
+        dark:bg-[#0d1117] dark:border-border dark:text-green-300 dark:placeholder:text-text-muted
+        bg-gray-900 border border-gray-700 text-green-400 placeholder:text-gray-500
+        focus:ring-1 focus:ring-accent focus:border-accent outline-none"
+      spellCheck={false}
+    />
+    <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
+      {getTextStats(inputs[input.id])}
+    </div>
+  </>
+)}
             )}
 
             {input.type === 'select' && (
@@ -442,6 +457,7 @@ export default function AgentRunner({ agent }) {
             <textarea
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
+              onKeyDown={handleKeyDown}
               rows={10}
               spellCheck={false}
               className="w-full px-3 py-2.5 rounded-lg text-xs font-mono leading-relaxed transition-colors resize-y
@@ -474,6 +490,7 @@ export default function AgentRunner({ agent }) {
           </button>
         ) : (
           <button
+            ref={runButtonRef}
             onClick={handleRun}
             disabled={!canRun()}
             className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white
