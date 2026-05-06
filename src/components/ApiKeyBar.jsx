@@ -1,11 +1,20 @@
 import { useState } from 'react'
 import { Eye, EyeOff, ShieldCheck } from 'lucide-react'
+import openaiLogo from "../assets/openai.svg";
+import anthropicLogo from "../assets/anthropic.svg";
+import geminiLogo from "../assets/gemini.svg";
 
 const PROVIDERS = [
   { value: 'openai', label: 'OpenAI' },
   { value: 'anthropic', label: 'Anthropic' },
   { value: 'gemini', label: 'Gemini' },
 ]
+
+const providerLogos = {
+  openai: openaiLogo,
+  anthropic: anthropicLogo,
+  gemini: geminiLogo,
+};
 
 const MODELS = {
   openai: [
@@ -56,21 +65,33 @@ export default function ApiKeyBar({
     <div className="rounded-lg border p-3 mb-4 transition-theme
       dark:bg-surface-card dark:border-border bg-white border-gray-200">
       <div className="flex flex-wrap items-center gap-2">
-        {/* Provider Select */}
-        <select
-          value={provider}
-          onChange={(e) => setProvider(e.target.value)}
-          className="h-8 px-2.5 rounded-md text-xs font-medium transition-colors cursor-pointer
-            dark:bg-surface-input dark:border-border dark:text-text-primary
-            bg-gray-50 border border-gray-200 text-gray-900
-            focus:ring-1 focus:ring-accent focus:border-accent outline-none"
-        >
-          {availableProviders.map((p) => (
-            <option key={p.value} value={p.value}>
-              {p.label}
-            </option>
-          ))}
-        </select>
+        {/* Provider Select with Logo */}
+        <div
+          className="flex items-center gap-2 h-8 px-2.5 rounded-md border transition-colors
+            dark:bg-surface-input dark:border-border
+            bg-white border-gray-200">
+          <img
+            src={providerLogos[provider]}
+            alt={`${provider} logo`}
+            className="w-4 h-4 flex-shrink-0"
+          />
+
+          <select
+            value={provider}
+            onChange={(e) => setProvider(e.target.value)}
+            className="h-full bg-transparent text-xs font-medium cursor-pointer outline-none
+              dark:text-white text-gray-900">
+            {availableProviders.map((p) => (
+              <option
+                key={p.value}
+                value={p.value}
+                className="text-black"
+              >
+                {p.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* Model Select */}
         <select
