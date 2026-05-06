@@ -43,6 +43,7 @@ export default function AgentRunner({ agent }) {
 
   const isPromptModified = customPrompt !== agent.systemPrompt
   const abortControllerRef = useRef(null)
+  const runButtonRef = useRef(null)
 
   useEffect(() => {
     setSelectedModel(MODEL_MAP[provider] || MODEL_MAP.openai)
@@ -142,6 +143,7 @@ export default function AgentRunner({ agent }) {
     setIsStreaming(true)
   }, [])
 
+
   const handleRun = async () => {
     setLoading(true)
     setError(null)
@@ -181,6 +183,16 @@ export default function AgentRunner({ agent }) {
       abortControllerRef.current = null
     }
   }
+
+  const handleKeyDown = (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault()
+
+    if (loading || !canRun()) return
+
+    runButtonRef.current?.click()
+  }
+}
 
   const handleStop = () => {
     if (abortControllerRef.current) {
@@ -298,6 +310,7 @@ export default function AgentRunner({ agent }) {
               <textarea
                 value={inputs[input.id] || ''}
                 onChange={(e) => updateInput(input.id, e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder={input.placeholder}
                 rows={4}
                 className="w-full px-3 py-2 rounded-md text-sm transition-colors resize-y
@@ -311,6 +324,7 @@ export default function AgentRunner({ agent }) {
               <textarea
                 value={inputs[input.id] || ''}
                 onChange={(e) => updateInput(input.id, e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder={input.placeholder}
                 rows={8}
                 className="w-full px-3 py-2 rounded-md text-xs font-mono transition-colors resize-y leading-relaxed
@@ -424,6 +438,7 @@ export default function AgentRunner({ agent }) {
             <textarea
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
+              onKeyDown={handleKeyDown}
               rows={10}
               spellCheck={false}
               className="w-full px-3 py-2.5 rounded-lg text-xs font-mono leading-relaxed transition-colors resize-y
@@ -456,6 +471,7 @@ export default function AgentRunner({ agent }) {
           </button>
         ) : (
           <button
+            ref={runButtonRef}
             onClick={handleRun}
             disabled={!canRun()}
             className="flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-white
