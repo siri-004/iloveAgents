@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import HomePage from './pages/HomePage'
 import AgentPage from './pages/AgentPage'
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <div className="min-h-screen transition-theme dark:bg-surface bg-gray-50">
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <ScrollToTop />
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Main content */}
