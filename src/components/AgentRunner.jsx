@@ -93,6 +93,14 @@ export default function AgentRunner({ agent }) {
     setInputs((prev) => ({ ...prev, [id]: value }))
   }
 
+  // Helper to calculate counts
+  const getTextStats = (text) => {
+    const content = text || '';
+    const charCount = content.length;
+    const wordCount = content.trim() === '' ? 0 : content.trim().split(/\s+/).length;
+    return `${charCount} characters · ${wordCount} words`;
+  }
+
   const toggleMultiselect = (id, option) => {
     setInputs((prev) => {
       const current = prev[id] || []
@@ -307,32 +315,43 @@ export default function AgentRunner({ agent }) {
             )}
 
             {input.type === 'textarea' && (
-              <textarea
-                value={inputs[input.id] || ''}
-                onChange={(e) => updateInput(input.id, e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={input.placeholder}
-                rows={4}
-                className="w-full px-3 py-2 rounded-md text-sm transition-colors resize-y
-                  dark:bg-surface-input dark:border-border dark:text-text-primary dark:placeholder:text-text-muted
-                  bg-gray-50 border border-gray-200 text-gray-900 placeholder:text-gray-400
-                  focus:ring-1 focus:ring-accent focus:border-accent outline-none"
-              />
-            )}
-
-            {input.type === 'code' && (
-              <textarea
-                value={inputs[input.id] || ''}
-                onChange={(e) => updateInput(input.id, e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={input.placeholder}
-                rows={8}
-                className="w-full px-3 py-2 rounded-md text-xs font-mono transition-colors resize-y leading-relaxed
-                  dark:bg-[#0d1117] dark:border-border dark:text-green-300 dark:placeholder:text-text-muted
-                  bg-gray-900 border border-gray-700 text-green-400 placeholder:text-gray-500
-                  focus:ring-1 focus:ring-accent focus:border-accent outline-none"
-                spellCheck={false}
-              />
+{input.type === 'textarea' && (
+  <>
+    <textarea
+      value={inputs[input.id] || ''}
+      onChange={(e) => updateInput(input.id, e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder={input.placeholder}
+      rows={4}
+      className="w-full px-3 py-2 rounded-md text-sm transition-colors resize-y
+        dark:bg-surface-input dark:border-border dark:text-text-primary dark:placeholder:text-text-muted
+        bg-gray-50 border border-gray-200 text-gray-900 placeholder:text-gray-400
+        focus:ring-1 focus:ring-accent focus:border-accent outline-none"
+    />
+    <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
+      {getTextStats(inputs[input.id])}
+    </div>
+  </>
+)}
+{input.type === 'code' && (
+  <>
+    <textarea
+      value={inputs[input.id] || ''}
+      onChange={(e) => updateInput(input.id, e.target.value)}
+      onKeyDown={handleKeyDown}
+      placeholder={input.placeholder}
+      rows={8}
+      className="w-full px-3 py-2 rounded-md text-xs font-mono transition-colors resize-y leading-relaxed
+        dark:bg-[#0d1117] dark:border-border dark:text-green-300 dark:placeholder:text-text-muted
+        bg-gray-900 border border-gray-700 text-green-400 placeholder:text-gray-500
+        focus:ring-1 focus:ring-accent focus:border-accent outline-none"
+      spellCheck={false}
+    />
+    <div className="text-[12px] text-right mt-1 dark:text-text-muted text-gray-400">
+      {getTextStats(inputs[input.id])}
+    </div>
+  </>
+)}
             )}
 
             {input.type === 'select' && (
