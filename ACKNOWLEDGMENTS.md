@@ -12,12 +12,13 @@ These are the people who have contributed to iloveAgents:
 
 | Name | GitHub | Contribution |
 |------|--------|--------------|
-| [CONTRIBUTOR NAME] | [@username](https://github.com/username) | Added [Agent Name] agent |
-| [CONTRIBUTOR NAME] | [@username](https://github.com/username) | Fixed [bug description] |
-| [CONTRIBUTOR NAME] | [@username](https://github.com/username) | Improved [UI/UX description] |
-| [CONTRIBUTOR NAME] | [@username](https://github.com/username) | Added [Agent Name] agent |
-| [CONTRIBUTOR NAME] | [@username](https://github.com/username) | Added [Agent Name] agent |
-
+| Mahek Shah | [@mahek395](https://github.com/mahek395) | Added [Agent Name] agent |
+| 2005rishabh | [@2005rishabh](https://github.com/2005rishabh) | Fixed [bug description] |
+| Saifali | [@sheeeuWu](https://github.com/sheeeuWu) | Improved [UI/UX description] |
+| Bonu Bhavana | [@bonubhavana044](https://github.com/bonubhavana04) | Added [Agent Name] agent |
+| VenkateshDevarakonda0706 | [VenkateshDevarakonda0706](https://github.com/VenkateshDevarakonda0706) | Added [Agent Name] agent |
+| Lucy | [@lucyb0207](https://github.com/lucyb0207) | Added [Agent Name] agent |
+| Ujjwal Maurya | [@Ujjwal-here](https://github.com/Ujjwal-here) | Added [Agent Name] agent |
 ---
 
 ## Project Creator & Maintainer
