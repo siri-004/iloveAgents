@@ -1,6 +1,6 @@
 <div align="center">
 
-# I Love❤️Agents
+# I Love ❤️ Agents
 
 **AI Agents, ready to use. Open source. Community-built. Bring your own key.**
 
@@ -18,72 +18,77 @@
 
 ---
 
-## What is I Love Agents?
+## What is iloveAgents?
 
-**I Love Agents** is a clean, modern web platform where you can run AI agents directly in your browser — no backend, no data collection, no sign-up. Just paste your API key and go.
+iloveAgents is a clean, open source web platform where you can run AI agents directly in your browser.
 
-Each agent is a focused tool that does one thing well: summarize meeting notes, generate SQL queries, write cold emails, review code, and more. The entire platform is **config-driven** — adding a new agent is as simple as adding a JavaScript object to a single file.
+No sign-up. No backend. No data collection. Just paste your API key and go.
 
-### Key Highlights
+Each agent is a focused tool that does one thing really well — summarize meeting notes, review code, generate SQL, write cold emails, and a lot more. The whole platform is config-driven, which means adding a new agent is as simple as adding one JavaScript object to a single file. No deep React knowledge needed.
 
-- **Privacy-first** — API keys never leave your browser. No server, no storage, no tracking.
-- **Zero setup** — No `.env` files, no backend, no database. Clone and run.
-- **Multi-provider** — Works with OpenAI, Anthropic, and Google Gemini out of the box.
-- **Config-driven** — Add agents by editing one file. No React knowledge needed.
-- **Community-built** — Open source and designed for contributions.
+---
+
+## Why iloveAgents?
+
+- **Your API key never leaves your browser.** It goes directly to OpenAI, Anthropic, or Google. No middleman, no storage, no tracking.
+- **Zero setup.** No `.env` files, no backend, no database. Clone and run in under a minute.
+- **Works with all major providers.** OpenAI, Anthropic, and Google Gemini — switch between them at runtime.
+- **Built for contributors.** Adding a new agent takes about 5 minutes and you don't need to know much React at all.
 
 ---
 
 ## Available Agents
 
-| # | Agent | What It Does | Category | Default Provider |
-|---|-------|-------------|----------|-----------------|
-| 1 | **PDF Summarizer** | Extracts structured summaries from PDF text with key points and action items | Productivity | Anthropic |
-| 2 | **Research Agent** | Comprehensive research on any topic with configurable depth and format | Research | OpenAI |
-| 3 | **Cold Email Writer** | Generates personalized B2B cold emails with tone and length control | Marketing | OpenAI |
-| 4 | **Code Reviewer** | Senior-level code review with issue detection, scoring, and fix suggestions | Engineering | Anthropic |
-| 5 | **Resume Screener** | Evaluates candidates against job descriptions with visual scorecard output | HR | OpenAI |
-| 6 | **LinkedIn Post Writer** | Creates ready-to-post LinkedIn content with strong hooks and hashtags | Marketing | OpenAI |
-| 7 | **Meeting Notes Summarizer** | Turns raw meeting notes into clean summaries with decisions, action items, and owners | Productivity | Anthropic |
-| 8 | **SQL Query Generator** | Converts plain English questions into optimized SQL with explanations | Engineering | Anthropic |
-| 9 | **Regex Generator** | Translates plain English descriptions into tested regex patterns with breakdowns | Engineering | OpenAI |
-| 10 | **Startup Idea Validator** | Analyzes startup ideas with market potential, competition, risks, and viability scoring | Business | OpenAI |
-| 11 | **ELI5 Explainer** | Explains complex topics in plain language at your chosen difficulty level | Education | OpenAI |
-| 12 | **API Doc Generator** | Paste code and get clean, professional API documentation with examples | Engineering | Anthropic |
-| 13 | **Email Reply Writer** | Paste any email you received and describe how you want to respond. Get a polished reply in seconds.| Productivity| Any |
-| 14 | **Bug Report Generator** |Describe a bug in plain English and get a complete, structured bug report ready to paste into GitHub Issues or Jira.|Engineering| Any |
-| 15 | **Performance Review Writer** | Turn bullet notes about an employee into a structured, fair, and specific performance review.| HR| Any |
-| 16 | **Cover Letter Writer** | Paste a job description and your background. Get a tailored cover letter that doesn't sound like every other cover letter.| HR| Any |
-| 17 | **Incident Post-Mortem Writer** | Turn rough incident notes into a blameless post-mortem with timeline, root cause analysis, and action items.| Engineering| Any |
-| 18 | **Changelog Generator** | Paste your git commits or PR titles and get a clean, user-facing changelog in Keep a Changelog format.| Engineering| Any |
-| 19 | **Unit Test Generator** | Paste any function or module and get complete unit tests with edge cases, happy paths, and failure scenarios.| Engineering| Any |
-| 20 | **Flashcard Generator** | Paste any study material, notes, or topic and get ready-to-use flashcards in Q&A format. Export for Anki or Quizlet.| Engineering| Any |
-| 21 | **Invoice Description Generator** | Turn rough notes about work you did into polished invoice line items and a professional project summary.| Engineering| Any|
-| 22 | **Grant Proposal Writer** |Describe your project or research and get a structured grant proposal with problem statement, objectives, methodology, and impact.| Education| Any|
-| 23 | **Social Media Thread Writer** |Turn any topic or idea into a compelling X/Twitter thread with hooks, engagement tactics, and a strong call to action.| Marketing| Any|
-| 24 | **Privacy Policy Generator** |Describe your app or website and get a comprehensive privacy policy draft covering data collection, usage, storage, and user rights.|Legal| Any|
-| 25 | **Cron Expression Builder** |Describe when you want a job to run in plain English and get a correct cron expression with a human-readabl  explanation.|Engineering| Any|
-| 26 | **Color Palette Generator** |Describe a mood, brand, or use case and get a complete color palette with hex codes, CSS variables, and accessibility contrast ratios.|Design| Any|
-| 27 | **User Story Writer** |Describe a feature in plain language and get a well-structured user story with acceptance criteria, edge cases, and technical notes.|Product| Any|
-| 28 | **Persona Generator** | Describe your product and get detailed, realistic user personas with demographics, goals, frustrations, and behavioral patterns. | Product | OpenAI |
-| 29 | **Competitive Analysis Generator** | Name your product and competitors to get a structured competitive analysis with feature comparisons, positioning, and strategic recommendations. | Business | OpenAI |
-| 30 | **Tone Rewriter** | Paste any text and select a target tone. Get your message rewritten — from formal to casual, harsh to diplomatic, or verbose to concise. | Productivity | Anthropic |
-| 31 | **Data Dictionary Generator** | Paste your database schema, CSV headers, or table descriptions and get a complete data dictionary with field definitions, types, and relationships. | Engineering | Anthropic |
-| 32 | **Accessibility Audit Generator** | Paste your HTML or component code and get a detailed WCAG accessibility audit with issues, severity ratings, and corrected code snippets. | Engineering | Anthropic |
+32 agents and growing — built by the community. 🚀
 
-> **Want to add your own?** See the [Contributing](#contributing) section below — it takes ~5 minutes.
+| # | Agent | What It Does | Category |
+|---|-------|-------------|----------|
+| 1 | PDF Summarizer | Extracts structured summaries from PDF text with key points and action items | Productivity |
+| 2 | Research Agent | Comprehensive research on any topic with configurable depth and format | Research |
+| 3 | Cold Email Writer | Generates personalized B2B cold emails with tone and length control | Marketing |
+| 4 | Code Reviewer | Senior-level code review with issue detection, scoring, and fix suggestions | Engineering |
+| 5 | Resume Screener | Evaluates candidates against job descriptions with visual scorecard output | HR |
+| 6 | LinkedIn Post Writer | Creates ready-to-post LinkedIn content with strong hooks and hashtags | Marketing |
+| 7 | Meeting Notes Summarizer | Turns raw meeting notes into clean summaries with decisions and action items | Productivity |
+| 8 | SQL Query Generator | Converts plain English questions into optimized SQL with explanations | Engineering |
+| 9 | Regex Generator | Translates plain English descriptions into tested regex patterns with breakdowns | Engineering |
+| 10 | Startup Idea Validator | Analyzes startup ideas with market potential, competition, risks, and viability scoring | Business |
+| 11 | ELI5 Explainer | Explains complex topics in plain language at your chosen difficulty level | Education |
+| 12 | API Doc Generator | Paste code and get clean, professional API documentation with examples | Engineering |
+| 13 | Email Reply Writer | Paste any email and describe how you want to respond. Get a polished reply in seconds | Productivity |
+| 14 | Bug Report Generator | Describe a bug in plain English and get a complete structured bug report ready for GitHub or Jira | Engineering |
+| 15 | Performance Review Writer | Turn bullet notes about an employee into a structured, fair performance review | HR |
+| 16 | Cover Letter Writer | Paste a job description and your background. Get a tailored cover letter that actually sounds like you | HR |
+| 17 | Incident Post-Mortem Writer | Turn rough incident notes into a blameless post-mortem with timeline, root cause, and action items | Engineering |
+| 18 | Changelog Generator | Paste git commits or PR titles and get a clean user-facing changelog | Engineering |
+| 19 | Unit Test Generator | Paste any function and get complete unit tests with edge cases and failure scenarios | Engineering |
+| 20 | Flashcard Generator | Paste any study material and get ready-to-use flashcards in Q&A format for Anki or Quizlet | Education |
+| 21 | Invoice Description Generator | Turn rough work notes into polished invoice line items and a project summary | Productivity |
+| 22 | Grant Proposal Writer | Describe your project and get a structured grant proposal with problem statement and methodology | Education |
+| 23 | Social Media Thread Writer | Turn any topic into a compelling X/Twitter thread with hooks and a strong call to action | Marketing |
+| 24 | Privacy Policy Generator | Describe your app and get a comprehensive privacy policy draft | Legal |
+| 25 | Cron Expression Builder | Describe when you want a job to run and get the correct cron expression with explanation | Engineering |
+| 26 | Color Palette Generator | Describe a mood or brand and get a complete color palette with hex codes and CSS variables | Design |
+| 27 | User Story Writer | Describe a feature and get a well-structured user story with acceptance criteria and edge cases | Product |
+| 28 | Persona Generator | Describe your product and get detailed realistic user personas with goals and frustrations | Product |
+| 29 | Competitive Analysis Generator | Name your product and competitors and get a structured competitive analysis | Business |
+| 30 | Tone Rewriter | Paste any text and get it rewritten in your chosen tone — formal, casual, diplomatic, or concise | Productivity |
+| 31 | Data Dictionary Generator | Paste your schema and get a complete data dictionary with field definitions and relationships | Engineering |
+| 32 | Accessibility Audit Generator | Paste your HTML and get a detailed WCAG audit with issues, severity ratings, and fixes | Engineering |
+
+> Want to add your own? It takes about 5 minutes. See [Contributing](#contributing) below.
 
 ---
 
 ## Supported Providers
 
-| Provider | Models | How to Get a Key |
-|----------|--------|-----------------|
-| **OpenAI** | GPT-4o, GPT-4o-mini | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
-| **Anthropic** | Claude Opus, Claude Sonnet | [console.anthropic.com](https://console.anthropic.com/) |
-| **Google Gemini** | Gemini 2.5 Flash | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+| Provider | Models | Get Your Key |
+|----------|--------|--------------|
+| OpenAI | GPT-4o, GPT-4o-mini | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
+| Anthropic | Claude Opus, Claude Sonnet | [console.anthropic.com](https://console.anthropic.com/) |
+| Google Gemini | Gemini 2.5 Flash | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 
-All agents support **provider switching** at runtime — pick any supported provider from the dropdown.
+You can switch providers on any agent at runtime from the dropdown. No restart needed.
 
 ---
 
@@ -91,7 +96,7 @@ All agents support **provider switching** at runtime — pick any supported prov
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) v18+
+- Node.js v18+
 - npm or yarn
 
 ### Run Locally
@@ -104,74 +109,69 @@ cd iloveAgents
 # Install dependencies
 npm install
 
-# Start the development server
+# Start the dev server
 npm run dev
 ```
 
-Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-> **No `.env` file needed** — API keys are entered by users at runtime and never stored on any server.
+No `.env` file needed. API keys are entered at runtime and never stored anywhere.
 
 ### Deploy Your Own
 
 1. Fork this repository
-2. Import to [Vercel](https://vercel.com/new) (or any static host)
+2. Import to [Vercel](https://vercel.com/new) or any static host
 3. Deploy — zero configuration needed
 
 The included `vercel.json` handles SPA routing automatically.
 
 ---
 
-## Architecture
-
-```
+## How It Works
 src/
 ├── agents/
-│   └── registry.js          # All agent configs live here (single source of truth)
+│   └── registry.js          # All agent configs live here
 ├── components/
 │   ├── AgentRunner.jsx       # Generic agent execution UI
 │   ├── AgentCard.jsx         # Agent card for the homepage grid
-│   ├── ApiKeyBar.jsx         # Provider & API key input bar
+│   ├── ApiKeyBar.jsx         # Provider and API key input
 │   ├── OutputRenderer.jsx    # Renders markdown/text/JSON output
 │   ├── ScorecardOutput.jsx   # Visual scorecard for JSON output
-│   ├── Navbar.jsx            # Top navigation bar
-│   ├── Sidebar.jsx           # Agent sidebar navigation
+│   ├── Navbar.jsx            # Top navigation
+│   ├── Sidebar.jsx           # Agent sidebar
 │   └── ...
 ├── lib/
-│   ├── llmAdapter.js         # Unified API adapter (OpenAI, Anthropic, Gemini)
-│   └── useApiKey.js          # API key state management hook
+│   ├── llmAdapter.js         # Unified API adapter for all providers
+│   └── useApiKey.js          # API key state management
 ├── pages/
 │   ├── HomePage.jsx          # Landing page with agent grid
-│   └── AgentPage.jsx         # Individual agent runner page
-└── main.jsx                  # App entry point
-```
+│   └── AgentPage.jsx         # Individual agent page
+└── main.jsx
 
-### How It Works
-
-1. **Registry** — Each agent is a config object in `registry.js` with inputs, a system prompt, and output type
-2. **LLM Adapter** — A single `runAgent()` function in `llmAdapter.js` handles all three providers through a unified interface
-3. **Agent Runner** — `AgentRunner.jsx` dynamically builds the input form from the config, constructs the prompt, and renders the response
-4. **No backend** — All API calls go directly from the browser to the provider's API
+1. **Registry** — Every agent is a config object in `registry.js` with inputs, a system prompt, and an output type.
+2. **LLM Adapter** — A single `runAgent()` function in `llmAdapter.js` handles all three providers through one unified interface.
+3. **Agent Runner** — `AgentRunner.jsx` builds the input form from the config, constructs the prompt, and renders the response.
+4. **No backend** — Every API call goes directly from your browser to the provider. Nothing passes through our servers because there are no servers.
 
 ---
 
 ## Contributing
 
-We welcome contributions! The easiest and most impactful way to contribute is to **add a new agent**.
+iloveAgents is built by the community. Every contribution matters — whether it is a new agent, a bug fix, a UI improvement, or just fixing a typo.
 
-### Add an Agent in 3 Steps
+### Add a New Agent in 3 Steps
 
-**1. Edit `src/agents/registry.js`** — Append your agent config:
+**1.** Edit `src/agents/registry.js` and add your agent config at the bottom:
 
 ```js
 {
   id: 'your-agent-id',
   name: 'Your Agent Name',
   description: 'One-line description.',
-  category: 'Category',           // Productivity, Research, Marketing, Engineering, HR
-  icon: 'IconName',               // Any icon from lucide.dev/icons
+  category: 'Category',
+  icon: 'IconName',               // from lucide.dev/icons
   provider: 'any',                // 'openai' | 'anthropic' | 'gemini' | 'any'
-  defaultProvider: 'openai',      // Only if provider is 'any'
+  defaultProvider: 'openai',
   model: 'gpt-4o',
   inputs: [
     {
@@ -182,24 +182,24 @@ We welcome contributions! The easiest and most impactful way to contribute is to
       required: true,
     },
   ],
-  systemPrompt: `Your system prompt here. Be specific about the output format.`,
+  systemPrompt: `Your system prompt here.`,
   outputType: 'markdown',         // markdown | text | json
 }
 ```
 
-**2. Test it** — Run `npm run dev`, navigate to your agent, and test with a real API key.
+**2.** Run `npm run dev` and test your agent with a real API key.
 
-**3. Open a PR** — Push and submit. That's it!
+**3.** Open a PR. That is it!
 
-> See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines, input types, and output types.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
-### Other Ways to Contribute
+### Other Ways to Help
 
-- **Bug fixes** — Found something broken? Fix it!
-- **UI/UX improvements** — Make the platform even more beautiful
-- **Documentation** — Improve docs, add examples
-- **Accessibility** — Help make agents usable for everyone
-- **Tests** — Add test coverage
+- 🐛 Fix a bug
+- 🎨 Improve the UI or UX
+- ♿ Improve accessibility
+- 📝 Improve the docs
+- 🧪 Add tests
 
 ---
 
@@ -208,27 +208,35 @@ We welcome contributions! The easiest and most impactful way to contribute is to
 | Technology | Purpose |
 |-----------|---------|
 | [React 18](https://react.dev) | Component framework |
-| [Vite 6](https://vitejs.dev) | Build tool & dev server |
-| [Tailwind CSS 3](https://tailwindcss.com) | Utility-first styling |
+| [Vite 6](https://vitejs.dev) | Build tool and dev server |
+| [Tailwind CSS 3](https://tailwindcss.com) | Styling |
 | [React Router 6](https://reactrouter.com) | Client-side routing |
-| [Lucide React](https://lucide.dev) | Icon library |
+| [Lucide React](https://lucide.dev) | Icons |
 | [react-markdown](https://github.com/remarkjs/react-markdown) | Markdown rendering |
-| [react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter) | Code block highlighting |
+| [react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter) | Code highlighting |
+
+---
+
+## Community
+
+- [Support](./SUPPORT.md) — stuck on something? Drop a comment on your issue and I will reply within 24 hours
+- [Acknowledgments](./ACKNOWLEDGMENTS.md) — everyone who has contributed to this project
+- [Maintainers](./MAINTAINERS.md) — who runs this project
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE) — use it, fork it, build on it.
+Licensed under the [MIT License](LICENSE) — use it, fork it, build on it.
 
 ---
 
 <div align="center">
 
-**Built by the open source community**
+Built with ❤️ by [@AditthyaSS](https://github.com/AditthyaSS) and the open source community
 
-**Star this repo** if you find it useful!
+⭐ Star this repo if you find it useful — it helps others discover it!
 
-[Live Demo](https://iloveagents.vercel.app) · [Report Bug](https://github.com/AditthyaSS/iloveAgents/issues) · [Request Agent](https://github.com/AditthyaSS/iloveAgents/issues/new) · [Contribute](CONTRIBUTING.md)
+[Live Demo](https://iloveagents.vercel.app) · [Report a Bug](https://github.com/AditthyaSS/iloveAgents/issues) · [Request an Agent](https://github.com/AditthyaSS/iloveAgents/issues/new) · [Contribute](CONTRIBUTING.md)
 
 </div>
