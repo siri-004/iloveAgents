@@ -24,7 +24,7 @@ Bad behavior looks like:
 
 ## If Something Goes Wrong
 
-If someone is behaving badly, please report it privately to **[YOUR EMAIL HERE]**.
+If someone is behaving badly, please report it privately to **aditthyassdeepa@gmail.com**.
 
 I will take every report seriously and handle it fairly.
 
