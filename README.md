@@ -128,6 +128,8 @@ The included `vercel.json` handles SPA routing automatically.
 ---
 
 ## How It Works
+
+```
 src/
 ├── agents/
 │   └── registry.js          # All agent configs live here
@@ -147,6 +149,7 @@ src/
 │   ├── HomePage.jsx          # Landing page with agent grid
 │   └── AgentPage.jsx         # Individual agent page
 └── main.jsx
+```
 
 1. **Registry** — Every agent is a config object in `registry.js` with inputs, a system prompt, and an output type.
 2. **LLM Adapter** — A single `runAgent()` function in `llmAdapter.js` handles all three providers through one unified interface.
