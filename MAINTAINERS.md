@@ -6,7 +6,7 @@ Right now, iloveAgents is maintained by one person:
 
 | Name | GitHub | Role |
 |------|--------|------|
-| [YOUR NAME HERE] | [@AditthyaSS](https://github.com/AditthyaSS) | Creator & Maintainer |
+| Aditthya SS Varma | [@AditthyaSS](https://github.com/AditthyaSS) | Creator & Maintainer |
 
 ## What I Do as Maintainer
 
