@@ -1,110 +1,147 @@
 # Contributing to iloveAgents
 
-Thanks for your interest in contributing! The easiest and most impactful way to contribute is by **adding a new agent**.
+Hey! Really glad you are here. 👋
+
+iloveAgents is built by people like you — developers, designers, and curious minds
+who want to make AI tools more accessible to everyone.
+Every contribution, big or small, makes this project better for thousands of people.
+
+Let's build something great together.
 
 ---
 
-## Adding a New Agent
+## What Can You Contribute?
 
-### Step 1: Open the registry
+| Type | Difficulty |
+|------|------------|
+| 🤖 Add a new agent | Beginner |
+| 🐛 Fix a bug | Beginner – Intermediate |
+| 🎨 UI / UX improvement | Intermediate |
+| ♿ Accessibility improvement | Intermediate |
+| 📝 Improve documentation | Beginner |
+| 🧪 Add tests | Intermediate |
 
-Edit `src/agents/registry.js`.
+---
 
-### Step 2: Add your agent config
+## The Easiest Way to Contribute — Add a New Agent
 
-Copy this template and fill in your agent details:
+Adding a new agent is the fastest way to make an impact.
+It takes about 5 minutes and you do not need to know much React at all.
+
+### Step 1 — Fork and clone the repo
+
+```bash
+git clone https://github.com/YOUR_USERNAME/iloveAgents.git
+cd iloveAgents
+npm install
+npm run dev
+```
+
+### Step 2 — Open the registry
+
+Everything lives in one file:
+src/agents/registry.js
+
+Scroll to the bottom and add your agent config.
+
+### Step 3 — Add your agent config
+
+Copy this template and fill in your details:
 
 ```js
 {
-  id: 'your-agent-id',           // URL-safe, lowercase, kebab-case
+  id: 'your-agent-id',           // lowercase, kebab-case, URL safe
   name: 'Your Agent Name',
-  description: 'One-line description of what the agent does.',
-  category: 'Category',          // e.g. Productivity, Research, Marketing, Engineering, HR
-  icon: 'IconName',              // Any Lucide icon name (see lucide.dev/icons)
+  description: 'One line description of what this agent does.',
+  category: 'Category',          // Productivity | Research | Marketing | Engineering | HR | Business | Education | Design | Product | Legal
+  icon: 'IconName',              // Any icon from lucide.dev/icons
   provider: 'any',               // 'openai' | 'anthropic' | 'gemini' | 'any'
   defaultProvider: 'openai',     // Only needed if provider is 'any'
-  model: 'gpt-4o',               // Default model to use
+  model: 'gpt-4o',
   inputs: [
     {
       id: 'input_field',
       label: 'Field Label',
-      type: 'text',              // 'text' | 'textarea' | 'code' | 'select' | 'multiselect'
-      placeholder: 'Hint text...',
+      type: 'textarea',          // text | textarea | code | select | multiselect
+      placeholder: 'Hint text for the user...',
       required: true,
-      // For select/multiselect:
-      // options: ['Option A', 'Option B'],
-      // defaultValue: 'Option A',
     },
   ],
-  systemPrompt: `Your system prompt here. Be specific about the format
-    you want the AI to respond in.`,
-  outputType: 'markdown',        // 'markdown' | 'json' | 'text'
+  systemPrompt: `Write your system prompt here.
+    Be specific about the output format you want.`,
+  outputType: 'markdown',        // markdown | text | json
 }
 ```
 
-### Step 3: Test it
+### Step 4 — Test it
 
-```bash
-npm run dev
-```
+Run the app and find your agent in the sidebar.
+Test it with a real API key from at least one provider.
+Make sure the output looks right and the inputs make sense.
 
-Navigate to your agent in the sidebar and test it with a real API key.
+### Step 5 — Open a PR
 
-### Step 4: Open a PR
+Push your branch and open a pull request.
+Use the PR template that appears automatically — it is just a quick checklist.
 
-Push your branch and open a pull request. That's it!
+That is it. I will review it as fast as I can. 🚀
 
 ---
 
 ## Input Types
 
-| Type | Renders As |
-|------|-----------|
-| `text` | Single-line text input |
-| `textarea` | Multi-line text area |
+| Type | What it renders |
+|------|----------------|
+| `text` | Single line text input |
+| `textarea` | Multi line text area |
 | `code` | Monospace code editor |
-| `select` | Dropdown select |
+| `select` | Dropdown with options |
 | `multiselect` | Toggle button group |
 
 ## Output Types
 
-| Type | Renders As |
-|------|-----------|
+| Type | What it renders |
+|------|----------------|
 | `markdown` | Rendered markdown with syntax highlighting |
-| `text` | Plain text with copy button |
-| `json` | Visual scorecard (expects specific JSON structure) |
+| `text` | Plain text with a copy button |
+| `json` | Visual scorecard (needs a specific JSON structure) |
 
 ---
 
-## Guidelines
+## A Few Simple Rules
 
-- **Keep system prompts clear and specific.** Tell the AI exactly what format to output.
-- **Test with at least one provider** before submitting.
-- **Don't add API keys** anywhere in the code.
-- **Keep it focused.** One agent = one task done well.
-- **Use existing categories** when possible, or propose a new one.
-
----
-
-## Other Contributions
-
-Beyond agents, we welcome:
-
-- 🐛 Bug fixes
-- 🎨 UI/UX improvements
-- 📝 Documentation
-- ♿ Accessibility improvements
-- 🧪 Tests
+- **One agent, one job.** A focused agent is a useful agent. If it does five things, it probably does none of them well.
+- **Write a clear system prompt.** Tell the AI exactly what format to return. Vague prompts give vague output.
+- **Test before you submit.** Run it with a real API key. If it doesn't work for you, it won't work for others.
+- **No API keys in the code.** Ever. For any reason.
+- **Use existing categories.** If your agent doesn't fit any, propose a new one in the PR description.
+- **Keep it clean.** React functional components, Tailwind CSS for styling, components in `src/components/`, pages in `src/pages/`.
 
 ---
 
-## Code Style
+## Not Sure What to Work On?
 
-- React functional components with hooks
-- Tailwind CSS for styling
-- Keep components in `src/components/`
-- Keep pages in `src/pages/`
+Browse issues labeled [`good first issue`](https://github.com/AditthyaSS/iloveAgents/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to find something beginner friendly.
+
+If you have an idea that is not in the issues yet, open a new one and describe what you want to build. I read every single one.
 
 ---
 
-Thank you for contributing! 🎉
+## A Note From the Maintainer
+
+I built iloveAgents because I wanted a place where anyone could run powerful AI tools
+without giving up their privacy or setting up a complicated backend.
+
+When you contribute here, you are helping make that real for everyone who uses this project.
+
+I review every PR personally. I will give you honest feedback, and if something needs
+to be changed I will tell you exactly what and why. I am not here to gatekeep —
+I am here to help good ideas ship.
+
+Thank you for spending your time on this. It genuinely means a lot. 🙏
+
+— [@AditthyaSS](https://github.com/AditthyaSS)
+
+---
+
+*Read something confusing in this guide? Open an issue and tell me. I will fix it.*
