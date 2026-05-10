@@ -1,0 +1,87 @@
+name: New Agent Proposal
+description: Suggest a new agent to add to iloveAgents
+title: "[Agent]: "
+labels: ["new agent", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Want to add a new agent? Fill this out and I will review it.
+        If it looks good, you can build it yourself or I will open it up for others to pick up.
+
+  - type: input
+    id: agent_name
+    attributes:
+      label: What is the agent called?
+      placeholder: Invoice Description Generator
+    validations:
+      required: true
+
+  - type: textarea
+    id: what_it_does
+    attributes:
+      label: What does it do?
+      description: Keep it simple. One or two sentences is enough.
+      placeholder: Takes rough notes about work you did and turns them into clean invoice line items.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Productivity
+        - Engineering
+        - Marketing
+        - Research
+        - HR
+        - Business
+        - Education
+        - Design
+        - Product
+        - Legal
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Which provider should it use?
+      options:
+        - OpenAI
+        - Anthropic
+        - Google Gemini
+        - Any
+    validations:
+      required: true
+
+  - type: textarea
+    id: inputs
+    attributes:
+      label: What inputs does the user fill in?
+      placeholder: |
+        - Work notes (textarea, required)
+        - Client name (text, optional)
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: What should the output look like?
+      placeholder: A bullet list of invoice line items followed by a short summary paragraph.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before you submit
+      options:
+        - label: I checked that this agent does not already exist in the registry
+          required: true
+        - label: This agent does one specific thing, not many things at once
+          required: true
+        - label: I am happy to build this myself if it gets approved
