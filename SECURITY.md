@@ -30,6 +30,6 @@ Any PR that does this will be closed, even if it was not intentional.
 
 If you find something that looks like a security issue, please **do not open a public GitHub issue**.
 
-Instead, email me directly at **[YOUR EMAIL HERE]**.
+Instead, email me directly at **aditthyassdeepa@gmail.com**.
 
 Tell me what you found and how to reproduce it. I will get back to you within 48 hours.
