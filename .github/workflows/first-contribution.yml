@@ -19,7 +19,7 @@ jobs:
             const pulls = await github.rest.pulls.list({
               owner: repo.owner,
               repo: repo.repo,
-              state: 'all',
+              state: "all",
               per_page: 100,
             });
 
@@ -28,30 +28,29 @@ jobs:
             );
 
             if (previousPRs.length === 0) {
-              const body = [
-                'Hey @' + creator + '! \u{1F44B}',
-                '',
-                'Wow \u2014 your first contribution to iloveAgents! This is a big deal and I want you to know it means a lot. \u{1F38A}',
-                '',
-                'Every agent on this platform started exactly like this \u2014 someone like you deciding to spend their time building something useful for everyone. That is something to be proud of.',
-                '',
-                'A few things while you wait for the review:',
-                '',
-                '- \u2B50 **Star the repo** if you haven\'t already \u2014 it helps others discover iloveAgents. [Star it here](https://github.com/AditthyaSS/iloveAgents)',
-                '- \u{1F4D6} Double check the [Contributing Guide](https://github.com/AditthyaSS/iloveAgents/blob/main/CONTRIBUTING.md) to make sure everything looks good on your end',
-                '- \u{1F4AC} If you have any questions while waiting, drop a comment right here \u2014 I reply within 24 hours',
-                '',
-                'I will review this as soon as I can. Can\'t wait to ship this with you. \u{1F680}',
-                '',
-                'Welcome to the iloveAgents family. Hope this is the first of many contributions. \u{1F64F}',
-                '',
-                '\u2014 [@AditthyaSS](https://github.com/AditthyaSS)'
-              ].join('\n');
+              const lines = [];
+              lines.push("Hey @" + creator + "!");
+              lines.push("");
+              lines.push("Wow - your first contribution to iloveAgents! This is a big deal and I want you to know it means a lot.");
+              lines.push("");
+              lines.push("Every agent on this platform started exactly like this - someone like you deciding to spend their time building something useful for everyone. That is something to be proud of.");
+              lines.push("");
+              lines.push("A few things while you wait for the review:");
+              lines.push("");
+              lines.push("- **Star the repo** if you have not already - it helps others discover iloveAgents. [Star it here](https://github.com/AditthyaSS/iloveAgents)");
+              lines.push("- Double check the [Contributing Guide](https://github.com/AditthyaSS/iloveAgents/blob/main/CONTRIBUTING.md) to make sure everything looks good on your end");
+              lines.push("- If you have any questions while waiting, drop a comment right here - I reply within 24 hours");
+              lines.push("");
+              lines.push("I will review this as soon as I can. Can not wait to ship this with you.");
+              lines.push("");
+              lines.push("Welcome to the iloveAgents family. Hope this is the first of many contributions.");
+              lines.push("");
+              lines.push("- [@AditthyaSS](https://github.com/AditthyaSS)");
 
               await github.rest.issues.createComment({
                 owner: repo.owner,
                 repo: repo.repo,
                 issue_number: context.payload.pull_request.number,
-                body: body
+                body: lines.join("\n")
               });
             }
