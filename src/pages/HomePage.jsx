@@ -28,7 +28,18 @@ export default function HomePage() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(null)
+  
   const { favorites } = useFavorites()
+
+const recentAgents = useMemo(() => {
+  const recentIds = JSON.parse(
+    localStorage.getItem('recentAgents') || '[]'
+  )
+
+  return recentIds
+    .map((id) => agents.find((a) => a.id === id))
+    .filter(Boolean)
+}, [])
 
   // Resolve favorite agents (preserving the user's star order)
   const favoriteAgents = useMemo(() => {
@@ -145,6 +156,34 @@ export default function HomePage() {
           </div>
         </div>
       )}
+      {/* ── Recently Used Section ── */}
+{recentAgents.length > 0 && !showingFiltered && (
+  <div className="mb-8 animate-fade-in">
+    <div className="flex items-center gap-2 mb-4">
+      <Heart size={14} className="text-pink-400 fill-pink-400" />
+
+      <h2 className="text-sm font-semibold uppercase tracking-wider dark:text-text-muted text-gray-400">
+        Recently Used
+      </h2>
+
+      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-pink-400/10 text-pink-500 border border-pink-400/20">
+        {recentAgents.length}
+      </span>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      {recentAgents.map((agent, idx) => (
+        <div
+          key={agent.id}
+          className="animate-fade-in"
+          style={{ animationDelay: `${idx * 40}ms` }}
+        >
+          <AgentCard agent={agent} />
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* ── Search & Category Filter Section ── */}
       <div className="mb-6 space-y-4">
