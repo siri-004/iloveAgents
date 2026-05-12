@@ -37,19 +37,20 @@ npm install
 npm run dev
 ```
 
-### Step 2 — Open the registry
+### Step 2 — Create your agent file
 
-Everything lives in one file:
-src/agents/registry.js
+Each agent now lives in its own file inside `src/agents/definitions/`.
+The registry picks it up automatically — no need to touch `registry.js` at all.
 
-Scroll to the bottom and add your agent config.
+Create a new file:
+src/agents/definitions/your-agent-name.js
 
 ### Step 3 — Add your agent config
 
-Copy this template and fill in your details:
+Paste this template into your new file and fill in your details:
 
 ```js
-{
+const yourAgentName = {
   id: 'your-agent-id',           // lowercase, kebab-case, URL safe
   name: 'Your Agent Name',
   description: 'One line description of what this agent does.',
@@ -70,8 +71,13 @@ Copy this template and fill in your details:
   systemPrompt: `Write your system prompt here.
     Be specific about the output format you want.`,
   outputType: 'markdown',        // markdown | text | json
-}
+};
+
+export default yourAgentName;
 ```
+
+That is it. The registry automatically collects every file in `src/agents/definitions/` —
+just drop your file in and your agent appears in the sidebar.
 
 ### Step 4 — Test it
 
