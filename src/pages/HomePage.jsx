@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
-import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart, Swords } from 'lucide-react'
 import agents from '../agents/registry'
 import AgentCard from '../components/AgentCard'
 import { useFavorites } from '../lib/useFavorites'
@@ -24,6 +25,7 @@ const categoryMeta = {
 const defaultMeta = { color: 'from-gray-500 to-gray-400', ring: 'ring-gray-500/30' }
 
 export default function HomePage() {
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState(null)
   const { favorites } = useFavorites()
@@ -61,9 +63,19 @@ export default function HomePage() {
         <h1 className="text-3xl sm:text-4xl font-bold dark:text-text-primary text-gray-900 mb-3 tracking-tight">
           AI Agents, ready to use.
         </h1>
-        <p className="text-sm dark:text-text-secondary text-gray-500 max-w-md mx-auto leading-relaxed">
+        <p className="text-sm dark:text-text-secondary text-gray-500 max-w-md mx-auto leading-relaxed mb-4">
           Open source. Community-built. Bring your own key.
         </p>
+        <button
+          onClick={() => navigate('/battle')}
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold
+            bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-950
+            hover:from-yellow-400 hover:to-amber-400 transition-all duration-200
+            shadow-md shadow-yellow-500/20 hover:shadow-yellow-500/30 active:scale-[0.97]"
+        >
+          <Swords size={16} />
+          Enter Battle Mode
+        </button>
       </div>
 
       {/* Stat Cards */}

@@ -244,3 +244,28 @@ html:not(.dark) .light-text-primary {
 html:not(.dark) .light-text-secondary {
   color: #52525b;
 }
+
+/* ===== Battle Mode Animations ===== */
+@keyframes battleFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes battleStepIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.battle-fade-in {
+  opacity: 0;
+  animation: battleFadeIn 0.5s ease-out forwards;
+}
+
+.battle-step-in {
+  opacity: 0;
+  animation: battleStepIn 0.4s ease-out forwards;
+}
+
+.battle-glow-gold {
+  box-shadow: 0 0 30px rgba(250, 204, 21, 0.15), 0 0 60px rgba(250, 204, 21, 0.05);
+}
