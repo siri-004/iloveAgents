@@ -39,7 +39,7 @@ Each agent is a focused tool that does one thing really well — summarize meeti
 
 ## Available Agents
 
-32 agents and growing — built by the community. 🚀
+33 agents and growing — built by the community. 🚀
 
 | # | Agent | What It Does | Category |
 |---|-------|-------------|----------|
@@ -75,6 +75,7 @@ Each agent is a focused tool that does one thing really well — summarize meeti
 | 30 | Tone Rewriter | Paste any text and get it rewritten in your chosen tone — formal, casual, diplomatic, or concise | Productivity |
 | 31 | Data Dictionary Generator | Paste your schema and get a complete data dictionary with field definitions and relationships | Engineering |
 | 32 | Accessibility Audit Generator | Paste your HTML and get a detailed WCAG audit with issues, severity ratings, and fixes | Engineering |
+| 33 | Personal Budget Analyzer | Analyze monthly income and expenses to get savings rate, benchmarks, and financial recommendations | Finance |
 
 > Want to add your own? It takes about 5 minutes. See [Contributing](#contributing) below.
 
@@ -89,6 +90,19 @@ Each agent is a focused tool that does one thing really well — summarize meeti
 | Google Gemini | Gemini 2.5 Flash | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 
 You can switch providers on any agent at runtime from the dropdown. No restart needed.
+
+---
+
+## Battle Mode
+
+Pit three AI providers against each other head-to-head.
+
+1. **Pick any agent** from the full registry
+2. **Enter your input once** — same prompt goes to all three
+3. **GPT-4o vs Claude Sonnet vs Gemini Flash** generate outputs simultaneously
+4. **You pick the winner**
+
+Battle Mode has its own dark, dramatic UI with color-coded provider columns (gold for OpenAI, purple for Anthropic, blue for Gemini). Each provider loads independently — if one fails, the other two still work. Access it from the "Enter Battle Mode" button on the homepage or navigate directly to `/battle`.
 
 ---
 
@@ -132,13 +146,19 @@ The included `vercel.json` handles SPA routing automatically.
 ```
 src/
 ├── agents/
-│   └── registry.js          # All agent configs live here
+│   ├── definitions/          # Each agent in its own file (auto-collected)
+│   │   ├── pdf-summarizer.js
+│   │   ├── code-reviewer.js
+│   │   └── ... (33 files)
+│   ├── categories.js         # CATEGORIES constant
+│   └── registry.js           # Auto-collects all definitions via import.meta.glob
 ├── components/
 │   ├── AgentRunner.jsx       # Generic agent execution UI
 │   ├── AgentCard.jsx         # Agent card for the homepage grid
 │   ├── ApiKeyBar.jsx         # Provider and API key input
 │   ├── OutputRenderer.jsx    # Renders markdown/text/JSON output
 │   ├── ScorecardOutput.jsx   # Visual scorecard for JSON output
+│   ├── BattleNavbar.jsx      # Battle Mode navigation bar
 │   ├── Navbar.jsx            # Top navigation
 │   ├── Sidebar.jsx           # Agent sidebar
 │   └── ...
@@ -147,14 +167,19 @@ src/
 │   └── useApiKey.js          # API key state management
 ├── pages/
 │   ├── HomePage.jsx          # Landing page with agent grid
-│   └── AgentPage.jsx         # Individual agent page
+│   ├── AgentPage.jsx         # Individual agent page
+│   ├── BattleModeLanding.jsx # Battle Mode entry page
+│   ├── BattleModeSetup.jsx   # Battle configuration
+│   ├── BattleModeArena.jsx   # Three-column battle arena
+│   └── BattleModeWinner.jsx  # Winner announcement
 └── main.jsx
 ```
 
-1. **Registry** — Every agent is a config object in `registry.js` with inputs, a system prompt, and an output type.
+1. **Registry** — Each agent is its own file in `src/agents/definitions/`. The registry auto-collects them via `import.meta.glob` — just drop a file in and it appears.
 2. **LLM Adapter** — A single `runAgent()` function in `llmAdapter.js` handles all three providers through one unified interface.
 3. **Agent Runner** — `AgentRunner.jsx` builds the input form from the config, constructs the prompt, and renders the response.
-4. **No backend** — Every API call goes directly from your browser to the provider. Nothing passes through our servers because there are no servers.
+4. **Battle Mode** — `BattleModeArena.jsx` fires the same prompt to GPT-4o, Claude Sonnet, and Gemini Flash simultaneously and lets you pick the winner.
+5. **No backend** — Every API call goes directly from your browser to the provider. Nothing passes through our servers because there are no servers.
 
 ---
 
@@ -164,10 +189,10 @@ iloveAgents is built by the community. Every contribution matters — whether it
 
 ### Add a New Agent in 3 Steps
 
-**1.** Edit `src/agents/registry.js` and add your agent config at the bottom:
+**1.** Create a new file in `src/agents/definitions/` named `your-agent-id.js`:
 
 ```js
-{
+export default {
   id: 'your-agent-id',
   name: 'Your Agent Name',
   description: 'One-line description.',
@@ -189,6 +214,8 @@ iloveAgents is built by the community. Every contribution matters — whether it
   outputType: 'markdown',         // markdown | text | json
 }
 ```
+
+The registry auto-collects it — no need to edit `registry.js`.
 
 **2.** Run `npm run dev` and test your agent with a real API key.
 
