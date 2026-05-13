@@ -19,6 +19,8 @@ These are the people who have contributed to iloveAgents:
 | VenkateshDevarakonda0706 | [VenkateshDevarakonda0706](https://github.com/VenkateshDevarakonda0706) | Added [Agent Name] agent |
 | Lucy | [@lucyb0207](https://github.com/lucyb0207) | Added [Agent Name] agent |
 | Ujjwal Maurya | [@Ujjwal-here](https://github.com/Ujjwal-here) | Added [Agent Name] agent |
+|Aastha Khatri | [@aasthakhatri11](https://github.com/aasthakhatri11) | Added new Category |
+---
 ---
 
 ## Project Creator & Maintainer
