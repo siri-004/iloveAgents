@@ -9,6 +9,10 @@ import BattleModeLanding from './pages/BattleModeLanding'
 import BattleModeSetup from './pages/BattleModeSetup'
 import BattleModeArena from './pages/BattleModeArena'
 import BattleModeWinner from './pages/BattleModeWinner'
+import WorkflowLibrary from './pages/WorkflowLibrary'
+import WorkflowBuilder from './pages/WorkflowBuilder'
+import WorkflowDetail from './pages/WorkflowDetail'
+import WorkflowRunner from './pages/WorkflowRunner'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -33,6 +37,11 @@ export default function App() {
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/agent/:id" element={<AgentPage />} />
+                  {/* Workflow routes */}
+                  <Route path="/workflows" element={<WorkflowLibrary />} />
+                  <Route path="/workflows/build" element={<WorkflowBuilder />} />
+                  <Route path="/workflows/:id" element={<WorkflowDetail />} />
+                  <Route path="/workflows/:id/run" element={<WorkflowRunner />} />
                 </Routes>
               </div>
             </main>

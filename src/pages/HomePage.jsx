@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart, Swords } from 'lucide-react'
+import { Bot, Users, Code2, ArrowRight, Github, Search, X, SlidersHorizontal, Star, Heart, Swords, GitBranch } from 'lucide-react'
 import agents from '../agents/registry'
 import AgentCard from '../components/AgentCard'
 import { useFavorites } from '../lib/useFavorites'
@@ -294,6 +294,47 @@ const recentAgents = useMemo(() => {
           </div>
         )}
       </div>
+
+      {/* ── Workflows Section ── */}
+      {!showingFiltered && (
+        <div className="mb-8 animate-fade-in">
+          <div
+            className="rounded-xl border p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4
+              dark:bg-surface-card dark:border-border bg-white border-gray-200"
+          >
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
+                <GitBranch size={20} className="text-accent" />
+              </div>
+              <div>
+                <h2 className="text-sm font-semibold dark:text-text-primary text-gray-900">
+                  Workflows
+                </h2>
+                <p className="text-xs dark:text-text-secondary text-gray-500 mt-0.5">
+                  Community built AI workflows — connect agents and automate your process
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <button
+                onClick={() => navigate('/workflows')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors
+                  dark:bg-surface-input dark:border-border dark:text-text-secondary dark:hover:text-text-primary
+                  bg-gray-100 border border-gray-200 text-gray-600 hover:text-gray-900"
+              >
+                Explore Workflows
+              </button>
+              <button
+                onClick={() => navigate('/workflows/build')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white
+                  bg-accent hover:bg-accent-hover transition-all duration-200 active:scale-[0.97]"
+              >
+                Build a Workflow
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer CTA */}
       <div className="text-center py-8 border-t dark:border-border border-gray-200">
