@@ -106,6 +106,58 @@ Battle Mode has its own dark, dramatic UI with color-coded provider columns (gol
 
 ---
 
+## 🔗 AI Workflow Builder  *(New)*
+
+> **Chain multiple agents together and automate your entire process in one run.**
+
+Workflows let you connect agents in sequence — the output of each agent automatically becomes the input for the next. Build once, run with any input.
+
+### What you can do
+
+- **Build a workflow** — pick up to 5 agents, arrange them in order, give the workflow a title
+- **Run it in one click** — paste your input once, every step runs automatically in sequence
+- **Watch it execute** — each step shows its own live status: waiting → running → done / failed
+- **Chain any agents** — research → summarize → write LinkedIn post → done
+- **Community library** — browse and run workflows shared by other users
+- **Real-time counters** — usage counts update live as others run the same workflows
+- **Share workflows** — one-click URL copy on any workflow detail page
+
+### How sequential execution works
+
+```
+Your Input
+    │
+    ▼
+┌─────────────┐
+│  Agent  1   │  e.g. Research Agent
+└──────┬──────┘
+       │ output
+    ▼
+┌─────────────┐
+│  Agent  2   │  e.g. PDF Summarizer
+└──────┬──────┘
+       │ output
+    ▼
+┌─────────────┐
+│  Agent  3   │  e.g. LinkedIn Post Writer
+└─────────────┘
+       │
+    Final Output
+```
+
+If any step fails, the workflow stops at that step and shows you exactly what went wrong — with a Retry button. On success, you can copy all outputs at once.
+
+### Navigation
+
+| Route | What it does |
+|---|---|
+| `/workflows` | Browse community workflow library |
+| `/workflows/build` | Create and save a new workflow |
+| `/workflows/:id` | View full details of a workflow |
+| `/workflows/:id/run` | Run a workflow step-by-step |
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -162,12 +214,19 @@ src/
 │   ├── Navbar.jsx            # Top navigation
 │   ├── Sidebar.jsx           # Agent sidebar
 │   └── ...
+├── hooks/
+│   └── useWorkflows.js       # Workflow data operations (fetch, save, realtime)
 ├── lib/
 │   ├── llmAdapter.js         # Unified API adapter for all providers
+│   ├── supabase.js           # Realtime data client
 │   └── useApiKey.js          # API key state management
 ├── pages/
 │   ├── HomePage.jsx          # Landing page with agent grid
 │   ├── AgentPage.jsx         # Individual agent page
+│   ├── WorkflowLibrary.jsx   # 🆕 Public workflow library with live counters
+│   ├── WorkflowBuilder.jsx   # 🆕 Drag-and-drop agent chain builder
+│   ├── WorkflowDetail.jsx    # 🆕 Single workflow view with realtime stats
+│   ├── WorkflowRunner.jsx    # 🆕 Sequential agent execution engine
 │   ├── BattleModeLanding.jsx # Battle Mode entry page
 │   ├── BattleModeSetup.jsx   # Battle configuration
 │   ├── BattleModeArena.jsx   # Three-column battle arena
@@ -179,7 +238,8 @@ src/
 2. **LLM Adapter** — A single `runAgent()` function in `llmAdapter.js` handles all three providers through one unified interface.
 3. **Agent Runner** — `AgentRunner.jsx` builds the input form from the config, constructs the prompt, and renders the response.
 4. **Battle Mode** — `BattleModeArena.jsx` fires the same prompt to GPT-4o, Claude Sonnet, and Gemini Flash simultaneously and lets you pick the winner.
-5. **No backend** — Every API call goes directly from your browser to the provider. Nothing passes through our servers because there are no servers.
+5. **Workflow Builder** — `WorkflowRunner.jsx` chains agents sequentially using the same `runAgent()` adapter — output of step N becomes input of step N+1, with per-step status cards and real-time usage counters.
+6. **No backend** — Every API call goes directly from your browser to the provider. Nothing passes through our servers because there are no servers.
 
 ---
 
