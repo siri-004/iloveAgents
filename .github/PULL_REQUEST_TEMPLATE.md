@@ -13,6 +13,9 @@
 ## Checklist
 
 **For every PR:**
+- [ ] I was assigned to this issue before starting
+- [ ] I have read CONTRIBUTING.md
+- [ ] This PR is linked to issue #
 - [ ] I tested this locally with `npm run dev`
 - [ ] No API keys are anywhere in my code
 - [ ] I did not add any new packages without discussing it first
