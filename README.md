@@ -83,11 +83,11 @@ Each agent is a focused tool that does one thing really well — summarize meeti
 
 ## Supported Providers
 
-| Provider | Models | Get Your Key |
-|----------|--------|--------------|
-| OpenAI | GPT-4o, GPT-4o-mini | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
-| Anthropic | Claude Opus, Claude Sonnet | [console.anthropic.com](https://console.anthropic.com/) |
-| Google Gemini | Gemini 2.5 Flash | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+| Provider | Logo | Models | Get Your Key |
+|----------|------|--------|--------------|
+| OpenAI | <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" width="80"/> | GPT-4o, GPT-4o-mini | [platform.openai.com](https://platform.openai.com/api-keys) |
+| Anthropic | <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" width="80"/> | Claude Opus, Claude Sonnet | [console.anthropic.com](https://console.anthropic.com/) |
+| Google Gemini | <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" width="80"/> | Gemini 2.5 Flash | [aistudio.google.com](https://aistudio.google.com/apikey) |
 
 You can switch providers on any agent at runtime from the dropdown. No restart needed.
 
@@ -310,7 +310,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 ## Community
 
 - [Support](./SUPPORT.md) — stuck on something? Drop a comment on your issue and I will reply within 24 hours
-- [Acknowledgments](./ACKNOWLEDGMENTS.md) — everyone who has contributed to this project
+- [Hall of Fame](./HALL_OF_FAME.md) — every person who has contributed to iloveAgents
 - [Maintainers](./MAINTAINERS.md) — who runs this project
 
 ---
