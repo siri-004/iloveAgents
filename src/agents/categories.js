@@ -20,5 +20,6 @@ export const CATEGORIES = [
   "Product",
   "Productivity",
   "Research",
-  "Healthcare"
+  "Healthcare",
+  "Sales"
 ];
