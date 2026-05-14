@@ -1,7 +1,7 @@
 name: Thank Contributor on Merge
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 permissions:
@@ -15,17 +15,21 @@ jobs:
 
     steps:
       - name: Post thank you comment
-        uses: peter-evans/create-or-update-comment@v5
+        uses: actions/github-script@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            🎉 Your contribution has been merged and is now live on [iloveagents.vercel.app](https://iloveagents.vercel.app)!
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: `🎉 Your contribution has been merged and is now live on [iloveagents.vercel.app](https://iloveagents.vercel.app)!
 
-            Thank you for taking the time to contribute to iloveAgents — it genuinely means a lot. Every contribution, big or small, makes this project better for everyone who uses it.
+Thank you for taking the time to contribute to iloveAgents — it genuinely means a lot. Every contribution, big or small, makes this project better for everyone who uses it.
 
-            If you haven't already, please consider ⭐ **starring the repo** — it helps others discover iloveAgents and keeps the community growing.
+If you haven't already, please consider ⭐ **starring the repo** — it helps others discover iloveAgents and keeps the community growing. [Star it here](https://github.com/AditthyaSS/iloveAgents)
 
-            Hope to see you again soon. You are always welcome here. 🙌
+Hope to see you again soon. You are always welcome here. 🙌
 
-            — [@AditthyaSS](https://github.com/AditthyaSS)
+— [@AditthyaSS](https://github.com/AditthyaSS)`
+            });

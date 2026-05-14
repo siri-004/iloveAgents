@@ -1,7 +1,7 @@
 name: Welcome First Time Contributor
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
 
 permissions:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if first time contributor
-        uses: actions/github-script@v7
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -23,7 +23,7 @@ jobs:
             const pulls = await github.rest.pulls.list({
               owner: repo.owner,
               repo: repo.repo,
-              state: "all",
+              state: 'all',
               per_page: 100,
             });
 
@@ -32,29 +32,26 @@ jobs:
             );
 
             if (previousPRs.length === 0) {
-              const lines = [];
-              lines.push("Hey @" + creator + "!");
-              lines.push("");
-              lines.push("Wow - your first contribution to iloveAgents! This is a big deal and I want you to know it means a lot.");
-              lines.push("");
-              lines.push("Every agent on this platform started exactly like this - someone like you deciding to spend their time building something useful for everyone. That is something to be proud of.");
-              lines.push("");
-              lines.push("A few things while you wait for the review:");
-              lines.push("");
-              lines.push("- **Star the repo** if you have not already - it helps others discover iloveAgents. [Star it here](https://github.com/AditthyaSS/iloveAgents)");
-              lines.push("- Double check the [Contributing Guide](https://github.com/AditthyaSS/iloveAgents/blob/main/CONTRIBUTING.md) to make sure everything looks good on your end");
-              lines.push("- If you have any questions while waiting, drop a comment right here - I reply within 24 hours");
-              lines.push("");
-              lines.push("I will review this as soon as I can. Can not wait to ship this with you.");
-              lines.push("");
-              lines.push("Welcome to the iloveAgents family. Hope this is the first of many contributions.");
-              lines.push("");
-              lines.push("- [@AditthyaSS](https://github.com/AditthyaSS)");
-
               await github.rest.issues.createComment({
                 owner: repo.owner,
                 repo: repo.repo,
                 issue_number: context.payload.pull_request.number,
-                body: lines.join("\n")
+                body: `Hey @${creator}! 👋
+
+Wow — your first contribution to iloveAgents! This is a big deal and I want you to know it means a lot. 🎊
+
+Every agent on this platform started exactly like this — someone like you deciding to spend their time building something useful for everyone. That is something to be proud of.
+
+A few things while you wait for the review:
+
+- ⭐ **Star the repo** if you haven't already — it helps others discover iloveAgents. [Star it here](https://github.com/AditthyaSS/iloveAgents)
+- 📖 Double check the [Contributing Guide](https://github.com/AditthyaSS/iloveAgents/blob/main/CONTRIBUTING.md) to make sure everything looks good on your end
+- 💬 If you have any questions while waiting, drop a comment right here — I reply within 24 hours
+
+I will review this as soon as I can. Can't wait to ship this with you. 🚀
+
+Welcome to the iloveAgents family. Hope this is the first of many contributions. 🙏
+
+— [@AditthyaSS](https://github.com/AditthyaSS)`
               });
             }
