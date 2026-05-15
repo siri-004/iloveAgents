@@ -183,8 +183,16 @@ export default function AgentRunner({ agent }) {
     try {
       const actualProvider =
         agent.provider === "any" ? provider : agent.provider;
-      const model =
-        selectedModel || MODEL_MAP[actualProvider] || MODEL_MAP.openai;
+      let model = selectedModel;
+      if (!model) {
+        if (agent.models && agent.models[actualProvider]) {
+          model = agent.models[actualProvider];
+        } else if (agent.model && (actualProvider === agent.defaultProvider || actualProvider === agent.provider)) {
+          model = agent.model;
+        } else {
+          model = MODEL_MAP[actualProvider] || MODEL_MAP.openai;
+        }
+      }
 
       const result = await streamAgent({
         provider: actualProvider,
