@@ -21,11 +21,7 @@ import { useApiKey } from '../lib/useApiKey'
 import { runAgent } from '../lib/llmAdapter'
 import { fetchWorkflowById, incrementUsage } from '../hooks/useWorkflows'
 
-const MODEL_MAP = {
-  openai: 'gpt-4o',
-  anthropic: 'claude-opus-4-20250514',
-  gemini: 'gemini-2.5-flash',
-}
+import { resolveAgentModel, MODEL_MAP } from '../lib/resolveAgentModel'
 
 const STATUS_COLORS = {
   waiting: 'dark:text-text-muted text-gray-400',
@@ -162,7 +158,7 @@ export default function WorkflowRunner() {
           ? provider
           : step.agent.provider
 
-      const model = step.agent.model || MODEL_MAP[actualProvider] || MODEL_MAP.openai
+      const model = resolveAgentModel(step.agent, actualProvider);
 
       try {
         const result = await runAgent({
