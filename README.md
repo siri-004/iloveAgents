@@ -181,8 +181,14 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-No `.env` file needed. API keys are entered at runtime and never stored anywhere.
+No API provider keys are required in a `.env` file because they are entered at runtime and never stored anywhere.
 
+However, local development may still require the following Supabase environment variables:
+
+```env
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
 ### Deploy Your Own
 
 1. Fork this repository
