@@ -103,7 +103,7 @@ export default function ApiKeyBar({
             focus:ring-1 focus:ring-accent focus:border-accent outline-none"
         >
           {availableModels.map((m) => (
-            <option key={m.value} value={m.value}>
+            <option key={m.value} value={m.value} className="text-black">
               {m.label}
             </option>
           ))}
