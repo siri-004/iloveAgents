@@ -162,14 +162,7 @@ export default function WorkflowRunner() {
           ? provider
           : step.agent.provider
 
-      let model;
-      if (step.agent.models && step.agent.models[actualProvider]) {
-        model = step.agent.models[actualProvider];
-      } else if (step.agent.model && (actualProvider === step.agent.defaultProvider || actualProvider === step.agent.provider)) {
-        model = step.agent.model;
-      } else {
-        model = MODEL_MAP[actualProvider] || MODEL_MAP.openai;
-      }
+      const model = step.agent.model || MODEL_MAP[actualProvider] || MODEL_MAP.openai
 
       try {
         const result = await runAgent({
