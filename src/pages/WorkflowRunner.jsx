@@ -19,9 +19,8 @@ import OutputRenderer from '../components/OutputRenderer'
 import ApiKeyBar from '../components/ApiKeyBar'
 import { useApiKey } from '../lib/useApiKey'
 import { runAgent } from '../lib/llmAdapter'
-import { fetchWorkflowById, incrementUsage } from '../hooks/useWorkflows'
-
 import { resolveAgentModel, MODEL_MAP } from '../lib/resolveAgentModel'
+import { fetchWorkflowById, incrementUsage } from '../hooks/useWorkflows'
 
 const STATUS_COLORS = {
   waiting: 'dark:text-text-muted text-gray-400',

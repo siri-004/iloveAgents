@@ -17,6 +17,7 @@ import ErrorCard from "./ErrorCard";
 import VoiceInput from "./VoiceInput";
 import { useApiKey } from "../lib/useApiKey";
 import { streamAgent } from "../lib/llmAdapter";
+import { resolveAgentModel, MODEL_MAP } from "../lib/resolveAgentModel";
 
 const providerLabels = {
   openai: "OpenAI",
