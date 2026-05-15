@@ -25,7 +25,6 @@ const providerLabels = {
   any: "Any",
 };
 
-import { resolveAgentModel, MODEL_MAP } from '../lib/resolveAgentModel';
 
 const LOADING_MESSAGES = [
   "⚙️ Agent is grinding for you...",

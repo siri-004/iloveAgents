@@ -158,7 +158,7 @@ export default function WorkflowRunner() {
           ? provider
           : step.agent.provider
 
-      const model = resolveAgentModel(step.agent, actualProvider);
+      const model = resolveAgentModel(step.agent, actualProvider)
 
       try {
         const result = await runAgent({
