@@ -31,6 +31,11 @@ const seoKeywordStrategyPlanner = {
       required: true,
     }
   ],
+  exampleInputs: {
+    nicheTopic: 'B2B SaaS CRM',
+    targetAudience: 'Small business owners looking to improve customer retention',
+    primaryGoal: 'Lead Generation',
+  },
   systemPrompt: `You are an expert SEO Strategist. Your goal is to generate a comprehensive, highly-actionable keyword strategy based on the user's provided niche, target audience, and primary goal.
 
 Follow these strict guidelines:
