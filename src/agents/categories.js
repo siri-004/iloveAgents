@@ -22,5 +22,6 @@ export const CATEGORIES = [
   "Productivity",
   "Research",
   "Healthcare",
-  "Sales"
+  "Sales",
+  "DevOps"
 ];
