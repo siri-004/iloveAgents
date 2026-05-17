@@ -17,6 +17,7 @@ import ErrorCard from "./ErrorCard";
 import VoiceInput from "./VoiceInput";
 import { useApiKey } from "../lib/useApiKey";
 import { streamAgent } from "../lib/llmAdapter";
+import { useHistory } from "../lib/useHistory";
 import { resolveAgentModel, MODEL_MAP } from "../lib/resolveAgentModel";
 
 const providerLabels = {
@@ -47,6 +48,8 @@ export default function AgentRunner({ agent }) {
     saveForSession,
     setSaveForSession,
   } = useApiKey();
+
+  const { saveRun } = useHistory();
 
   const [inputs, setInputs] = useState({});
   const [output, setOutput] = useState(null);
@@ -195,6 +198,15 @@ export default function AgentRunner({ agent }) {
       setStreamingOutput("");
       setIsStreaming(false);
       setDuration(result.duration);
+
+      // Save to history
+      saveRun({
+        agentId: agent.id,
+        agentName: agent.name,
+        inputs: { ...inputs },
+        output: result.content,
+        provider: actualProvider,
+      });
     } catch (err) {
       if (err.name !== "AbortError") {
         setError(err.message);
