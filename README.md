@@ -180,18 +180,28 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
+No API provider keys are required in a `.env` file because 
+they are entered at runtime and never stored anywhere.
 
-⚠️ A `.env` file is required to run the project locally.
+However, local development requires a `.env.local` file 
+for Supabase features like Workflows.
 
-Certain features (such as workflows powered by Supabase) depend on environment variables.
+Create a `.env.local` file in the root directory:
 
-Create a `.env` file in the root directory and include the following:
-
-VITE_SUPABASE_URL=your_supabase_url  
+```env
+VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-Note: API keys for AI providers are still entered at runtime and are not stored.
+Note: AI provider API keys are still entered at runtime 
+and are never stored anywhere.
 
+However, local development may still require the following Supabase environment variables:
+
+```env
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
 ### Deploy Your Own
 
 1. Fork this repository
