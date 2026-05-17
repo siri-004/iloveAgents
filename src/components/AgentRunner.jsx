@@ -18,6 +18,7 @@ import VoiceInput from "./VoiceInput";
 import { useApiKey } from "../lib/useApiKey";
 import { streamAgent } from "../lib/llmAdapter";
 import { useHistory } from "../lib/useHistory";
+import { resolveAgentModel, MODEL_MAP } from "../lib/resolveAgentModel";
 
 const providerLabels = {
   openai: "OpenAI",
@@ -26,11 +27,6 @@ const providerLabels = {
   any: "Any",
 };
 
-const MODEL_MAP = {
-  openai: "gpt-4o",
-  anthropic: "claude-opus-4-20250514",
-  gemini: "gemini-2.5-flash",
-};
 
 const LOADING_MESSAGES = [
   "⚙️ Agent is grinding for you...",
@@ -186,8 +182,7 @@ export default function AgentRunner({ agent }) {
     try {
       const actualProvider =
         agent.provider === "any" ? provider : agent.provider;
-      const model =
-        selectedModel || MODEL_MAP[actualProvider] || MODEL_MAP.openai;
+      const model = resolveAgentModel(agent, actualProvider, selectedModel);
 
       const result = await streamAgent({
         provider: actualProvider,
