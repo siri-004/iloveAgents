@@ -17,6 +17,8 @@ import ErrorCard from "./ErrorCard";
 import VoiceInput from "./VoiceInput";
 import { useApiKey } from "../lib/useApiKey";
 import { streamAgent } from "../lib/llmAdapter";
+import { useHistory } from "../lib/useHistory";
+import { resolveAgentModel, MODEL_MAP } from "../lib/resolveAgentModel";
 
 const providerLabels = {
   openai: "OpenAI",
@@ -25,11 +27,6 @@ const providerLabels = {
   any: "Any",
 };
 
-const MODEL_MAP = {
-  openai: "gpt-4o",
-  anthropic: "claude-opus-4-20250514",
-  gemini: "gemini-2.5-flash",
-};
 
 const LOADING_MESSAGES = [
   "⚙️ Agent is grinding for you...",
@@ -51,6 +48,8 @@ export default function AgentRunner({ agent }) {
     saveForSession,
     setSaveForSession,
   } = useApiKey();
+
+  const { saveRun } = useHistory();
 
   const [inputs, setInputs] = useState({});
   const [output, setOutput] = useState(null);
@@ -183,8 +182,7 @@ export default function AgentRunner({ agent }) {
     try {
       const actualProvider =
         agent.provider === "any" ? provider : agent.provider;
-      const model =
-        selectedModel || MODEL_MAP[actualProvider] || MODEL_MAP.openai;
+      const model = resolveAgentModel(agent, actualProvider, selectedModel);
 
       const result = await streamAgent({
         provider: actualProvider,
@@ -200,6 +198,15 @@ export default function AgentRunner({ agent }) {
       setStreamingOutput("");
       setIsStreaming(false);
       setDuration(result.duration);
+
+      // Save to history
+      saveRun({
+        agentId: agent.id,
+        agentName: agent.name,
+        inputs: { ...inputs },
+        output: result.content,
+        provider: actualProvider,
+      });
     } catch (err) {
       if (err.name !== "AbortError") {
         setError(err.message);
